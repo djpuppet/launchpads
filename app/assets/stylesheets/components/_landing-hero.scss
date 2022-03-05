@@ -1,0 +1,36 @@
+@use '../tools' as *;
+
+.c-landing-hero {
+  min-height: var(--main-height, 100%);
+  display: flex;
+  align-items: center;
+
+  @include theme-prop(background-color, section-background);
+}
+
+.c-landing-hero__wrapper {
+  justify-content: space-between;
+}
+
+.c-landing-hero__form {
+  @include grid-cell-span(phone, 4);
+  @include grid-cell-span(tablet, 8);
+  @include grid-cell-span(desktop, 4);
+  @include grid-cell-span(full, 4);
+}
+
+.c-landing-hero__image {
+  @include bp-max(tablet) {
+    display: none;
+  }
+  @include grid-cell-span(desktop, 8);
+  @include grid-cell-span(full, 8);
+
+  display: flex;
+  align-items: center;
+
+  img {
+    max-width: 100%;
+    transform: translateX(-50px);
+  }
+}

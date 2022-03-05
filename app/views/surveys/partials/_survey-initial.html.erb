@@ -1,0 +1,53 @@
+<div class="c-survey-form">
+  <div class="c-survey-form__section-head">
+    <h2 class="c-survey-form__heading">
+      General Questions
+    </h2>
+  </div>
+
+  <div class="c-grid__inner c-survey-form__wrapper">
+    <div class="c-form-field c-form-field--wide <%= add_error_class(form, :monthly_income) %> c-grid__cell">
+      <%= render(
+              'partials/form/dropdown-field',
+              {
+                  form:     form,
+                  label:    I18n.t('model.survey.properties.montlhy_income'),
+                  property: :monthly_income,
+                  options: Survey::MONTHLY_INCOME_VALUES.map {|val| [val, val]}
+              }
+          ) %>
+    </div>
+
+    <div class="c-form-field c-form-field--wide <%= add_error_class(form, :silp_assesment_completed) %> c-grid__cell">
+      <%= render(
+              'partials/form/dropdown-field',
+              {
+                  form:     form,
+                  label:    I18n.t('model.survey.properties.silp_assesment_completed'),
+                  property: :silp_assesment_completed,
+                  boolean:   true,
+                  options: [
+                               ['No', 0],
+                               ['Yes', 1],
+                           ]
+              }
+          ) %>
+    </div>
+
+    <div class="c-form-field c-form-field--wide <%= add_error_class(form, :good_candidate) %> c-grid__cell">
+      <%= render(
+              'partials/form/dropdown-field',
+              {
+                  form:     form,
+                  label:    I18n.t('model.survey.properties.good_candidate'),
+                  property: :good_candidate,
+                  boolean:   true,
+                  options: [
+                               ['No', 0],
+                               ['Yes', 1],
+                           ]
+              }
+          ) %>
+    </div>
+  </div>
+</div>

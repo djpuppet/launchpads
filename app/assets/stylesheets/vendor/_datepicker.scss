@@ -1,0 +1,5 @@
+@use '../settings/colors' as *;
+
+@use '~vanillajs-datepicker/sass/datepicker' with (
+  $link: $primary,
+);

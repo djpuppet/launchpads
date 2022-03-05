@@ -1,0 +1,155 @@
+@use '../tools' as *;
+
+.c-room-tile {
+  position: relative;
+}
+
+.c-room-tile__host {
+  position: absolute;
+  top: 15px;
+  left: 10px;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 2px solid;
+  @include theme-prop(border-color, primary);
+  background-size: contain;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.c-room-tile__slides {
+  width: 100%;
+  height: 215px;
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+}
+
+.c-room-tile__slides--bordered {
+  border: 2px solid;
+  @include theme-prop(border-color, primary);
+}
+
+.c-room-tile__slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  transform: translateX(-200%);
+
+  &.transitioning {
+    transition: transform 1s;
+  }
+
+  .disabled & {
+    transform: none;
+  }
+
+  img {
+    position: absolute;
+    opacity: 0;
+  }
+
+  &.error {
+    background-color: white;
+
+    img {
+      display: none;
+    }
+  }
+}
+
+.c-room-tile__dots {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  a {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: white;
+    opacity: 0.7;
+    border: 1px solid rgba(black, 0.2);
+    box-sizing: border-box;
+
+    &:not(:last-child) {
+      margin-right: 3px;
+    }
+  }
+
+  .active {
+    opacity: 1;
+  }
+
+  .disabled & {
+    display: none;
+  }
+}
+
+.c-room-tile__info {
+  margin-top: 10px;
+  padding: 0 10px;
+  display: block;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.c-room-tile__district {
+  text: {
+    decoration: none;
+    transform: uppercase;
+  }
+  font: {
+    size: 12px;
+    weight: normal;
+  }
+  letter-spacing: 0.04em;
+  @include theme-prop(color, primary);
+
+  .c-room-tile__info:hover & {
+    text-decoration: underline;
+  }
+}
+
+.c-room-tile__name {
+  margin: 0;
+  font: {
+    size: 18px;
+    weight: normal;
+  }
+  line-height: 23px;
+  @include theme-prop(color, text);
+
+  .c-room-tile__info:hover & {
+    text-decoration: underline;
+  }
+}
+
+.c-room-tile__price {
+  margin-top: 5px;
+
+  font: {
+    size: 14px;
+    weight: normal;
+  }
+  line-height: 19px;
+  @include theme-prop(color, disabled);
+
+  span {
+    @include theme-prop(color, text);
+  }
+}

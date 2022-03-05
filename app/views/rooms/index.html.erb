@@ -1,0 +1,13 @@
+<%= render(
+        'partials/hero',
+        {
+            background:       true,
+            icon_path:        'media/images/icons/hero-icon.svg',
+            icon_transparent: true,
+            title:            'Browse Homes',
+        }
+    ) %>
+
+<div class="c-rooms-list c-grid" data-controller="filters">
+  <%= render 'partials/rooms-listing' %>
+</div>

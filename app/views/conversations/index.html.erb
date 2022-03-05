@@ -1,0 +1,25 @@
+<%= render(
+        'partials/hero',
+        {
+            background:       true,
+            icon_path:        'media/images/icons/sent-icon.svg',
+            icon_transparent: true,
+            title:            'Inbox',
+        }
+    ) %>
+
+<div class="c-conversations-list c-grid">
+  <div class="c-grid__inner">
+    <% if @conversations.any? %>
+      <%= render @conversations %>
+    <% else %>
+      <div class="c-grid__cell c-grid__cell--span-12">
+        <% if current_user.youth? %>
+          Send a message to a prospective host to find your next home!
+        <% else %>
+          No previous conversations available.
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

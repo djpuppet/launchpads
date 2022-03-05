@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+  </head>
+  <body>
+    <p>
+      Thank you for responding to questions about <%= @survey.user.username %>.
+      Based on your responses, it appears you believe they may not be ready to live on their own.
+      We'll be reaching out to learn more about whether there is anything we can do to help the youth get ready to rent on their own.
+    </p>
+    <p>
+      Thanks for helping us make Launchpads possible,
+      <br>The Launchpads Team
+    </p>
+    <%= render 'partials/not-reply-message-mailer' %>
+  </body>
+</html>

@@ -1,0 +1,47 @@
+<div class="c-form c-grid__inner c-tab hidden" id="preferences" data-target="tabs.tab">
+  <div class="c-form__wrapper c-grid__cell c-grid__cell--span-12">
+    <div class="c-form__section-heading">
+      <h2>
+        Preferences
+      </h2>
+      <p>
+        Help us make better matches by giving us a sense of your lifestyle and living preferences.
+      </p>
+    </div>
+
+    <div class="c-form__row c-grid__inner">
+      <div class="c-form-field c-form-field--wide <%= add_error_class(form, :children) %> c-grid__cell">
+        <%= render(
+                partial: 'partials/form/text-field',
+                locals:  {
+                    form:          form,
+                    label:         'Children*',
+                    property:      :children,
+                    plain:         true,
+                    field_options: {
+                        placeholder: 'How many children live with you part or full time?',
+                        type:        'number',
+                        min:         0,
+                        step:        1
+                    }
+                }
+            ) %>
+      </div>
+    </div>
+
+  </div>
+  <div class="c-form__actions c-grid__cell c-grid__cell--span-12">
+    <a
+      href="#"
+      title="Go to previous step"
+      class="o-btn o-btn--round o-btn--outline"
+      data-action="click->tabs#previousTab"
+    >
+      Previous
+    </a>
+    <%= form.submit(
+            'Submit',
+            class: 'o-btn o-btn--primary o-btn--round',
+        ) %>
+  </div>
+</div> <!-- END c-tab 2 -->

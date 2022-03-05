@@ -1,0 +1,76 @@
+@use '../tools' as *;
+
+.o-tooltip {
+  padding: 10px 16px;
+
+  background-color: white;
+  border-radius: 10px;
+  @include theme-prop(box-shadow, shadow);
+
+  position: relative;
+  z-index: 10;
+  pointer-events: none;
+
+  &.hidden {
+    display: none;
+  }
+
+  &--mobile {
+    @include bp-min(desktop) {
+      padding: initial;
+      background-color: initial;
+      box-shadow: initial;
+      border-radius: initial;
+
+      &.hidden {
+        display: initial;
+      }
+    }
+  }
+
+  &--clickable {
+    pointer-events: auto;
+  }
+}
+
+.o-tooltip__arrow {
+  --width: 30px;
+  width: var(--width);
+  height: 14px;
+
+  overflow: hidden;
+  position: absolute;
+  top: -14px;
+  right: 0;
+  left: auto;
+
+  @include bp-only(phone) {
+    right: auto;
+    left: calc(var(--from-left, 100%) - var(--width));
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    @include theme-prop(box-shadow, shadow);
+    transform: scale(0.5, 1) rotate(-45deg);
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+
+  .o-tooltip--mobile & {
+    @include bp-min(desktop) {
+      display: none;
+    }
+  }
+
+  .o-tooltip--inverted & {
+    transform: rotate(180deg);
+    top: auto;
+    bottom: -14px;
+  }
+}

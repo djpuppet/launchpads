@@ -1,0 +1,119 @@
+@use '../tools' as *;
+
+$messageItemBorderRadius: 10px;
+
+.c-messages {
+  margin: 20px 0;
+
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-template-columns: 50px 1fr 50px;
+
+  &:not(:last-child) {
+    margin-bottom: 40px;
+  }
+
+  &:last-child {
+    scroll-snap-align: end;
+  }
+
+  &--left {
+    --authorColumnStart: 1;
+    --authorColumnEnd: 2;
+    --radius-right: #{$messageItemBorderRadius};
+    --radius-left: 0;
+    --text-align: left;
+    --items-align: flex-start;
+    @include theme-prop(--messageBackgroundColor, primary-light);
+  }
+
+  &--right {
+    --authorColumnStart: 3;
+    --authorColumnEnd: 4;
+    --radius-right: 0;
+    --radius-left: #{$messageItemBorderRadius};
+    --text-align: right;
+    --items-align: flex-end;
+    @include theme-prop(--messageBackgroundColor, section-background);
+  }
+}
+
+.c-messages__author {
+  grid-column-start: var(--authorColumnStart);
+  grid-column-end: var(--authorColumnEnd);
+  grid-row-start: 1;
+  grid-row-end: 3;
+
+  padding: 0 10px 5px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.c-messages__list {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 2;
+
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: var(--items-align);
+}
+
+.c-messages__date {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 3;
+
+  font: {
+    size: 14px;
+    weight: 300;
+  }
+  line-height: 20px;
+  letter-spacing: 0.1px;
+  @include theme-prop(color, disabled);
+  text-align: var(--text-align);
+}
+
+.c-messages__author-photo {
+  width: 28px;
+  height: 28px;
+
+  border: 1px solid;
+  @include theme-prop(border-color, primary);
+  border-radius: 50%;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.c-messages__item {
+  padding: 8px 17px;
+  margin-bottom: 5px;
+  display: inline-block;
+
+  background-color: var(--messageBackgroundColor);
+  overflow: hidden;
+
+  &:first-child {
+    border-radius: #{$messageItemBorderRadius} #{$messageItemBorderRadius} var(--radius-right) var(--radius-left);
+  }
+
+  &:last-child {
+    border-bottom-left-radius: var(--radius-left);
+    border-bottom-right-radius: var(--radius-right);
+  }
+
+  &:not(:first-child) {
+    border-radius: var(--radius-left) var(--radius-right) var(--radius-right) var(--radius-left);
+  }
+
+  @include bp-min(tablet) {
+    max-width: 75%;
+  }
+}

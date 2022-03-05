@@ -1,0 +1,41 @@
+@use '../tools' as *;
+
+.c-survey-form {
+  @include bp-padding;
+}
+
+.c-survey-form__section-head {
+  padding-bottom: 35px;
+  margin-bottom: 35px;
+
+  border-bottom: 1px solid;
+  @include theme-prop(color, form-border);
+}
+
+.c-survey-form__heading {
+  margin: 0;
+
+  font: {
+    size: 25px;
+    weight: 600;
+  }
+  line-height: 40px;
+  @include theme-prop(color, primary);
+}
+
+.c-survey-form__subheading {
+  margin: 0;
+
+  font: {
+    size: 16px;
+    weight: 300;
+  }
+  line-height: 25px;
+  @include theme-prop(color, secondary);
+}
+
+.c-survey-form__wrapper {
+  padding: 0;
+  max-width: 100%;
+  grid-column-gap: 0;
+}

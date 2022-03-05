@@ -1,0 +1,46 @@
+@use '../tools' as *;
+@use '../objects/checkbox';
+
+.c-form-checkboxes {
+  align-self: end;
+}
+
+.c-form-checkboxes__label {
+  font: {
+    size: 16px;
+    weight: 300;
+  }
+  line-height: 24px;
+  @include theme-prop(color, text-light);
+
+  @include bp-min(desktop) {
+    font-size: 20px;
+    line-height: 25px;
+  }
+
+  .has-errors & {
+    @include theme-prop(color, error);
+  }
+}
+
+.c-form-checkboxes__list {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.c-form-checkboxes__checkbox {
+  @extend .o-checkbox;
+
+  margin-bottom: 10px;
+
+  span {
+    display: flex;
+
+    &::before {
+      margin-top: 2px;
+      flex-shrink: 0;
+      flex-grow: 0;
+    }
+  }
+}

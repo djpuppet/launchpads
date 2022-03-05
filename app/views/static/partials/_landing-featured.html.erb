@@ -1,0 +1,36 @@
+<% if @featured_rooms %>
+<section class="c-landing-featured">
+  <div class="c-grid">
+    <div class="c-grid__inner">
+      <div class="c-grid__cell c-grid__cell--span-8 c-landing-featured__description">
+        <h2 class="c-landing-featured__heading">
+          Featured Rooms for Rent in SF
+        </h2>
+        <p class="c-landing-featured__paragraph">
+          All hosts are vetted by Launchpads. If you are a youth in extended foster care, sign up to browse available
+          homes. Once you find a space you like, connect with the host and we’ll facilitate the matching process.
+        </p>
+        <div class="c-landing-featured__cta">
+          <a
+            href="#"
+            title="Sign up"
+            class="o-btn o-btn--round o-btn--secondary"
+          >
+            Sign up to get started
+          </a>
+        </div>
+      </div>
+
+      <div class="c-grid__cell--span-12">
+        <div class="c-landing-featured__rooms">
+          <% @featured_rooms.each do |room| %>
+            <div class="c-landing-featured__room-tile">
+              <%= render 'rooms/room', room: room %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<% end %>

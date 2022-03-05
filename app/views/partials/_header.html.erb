@@ -1,0 +1,105 @@
+<header class="c-header" data-controller="navigation">
+  <div class="c-header__grid">
+    <div class="c-header__wrapper">
+      <a href="<%= root_path %>" class="c-header__logo">
+        <%= image_pack_tag('media/images/logo.svg', alt: 'Launchpads') %>
+      </a>
+      <div class="c-header__hamburger">
+        <a href="#" data-action="navigation#toggleMenu">
+          <%= image_pack_tag('media/images/icons/menu.svg', alt: 'Menu') %>
+        </a>
+      </div>
+      <nav
+        class="c-header__menu o-tooltip o-tooltip--mobile o-tooltip--clickable hidden<%= ' unread' if @unread.any? %>"
+        data-target="navigation.menu"
+      >
+        <div class="o-tooltip__arrow"></div>
+        <ul class="c-header__links">
+          <li><a href="#faq" title="FAQ" class="c-header__link" data-turbolinks="false">FAQ</a></li>
+          <li><a href="<%= rooms_path %>" title="Browse Homes" class="c-header__link">Browse Homes</a></li>
+          <% if current_user %>
+            <% profile_page = %w[host youth].include?(current_user.role) ? profile_preview_path : profile_type_path %>
+            <li>
+              <a
+                href="<%= profile_page %>"
+                title="My Profile"
+                class="c-header__link"
+                data-turbolinks="false"
+              >
+                My Profile
+              </a>
+            </li>
+            <% if current_user.admin? %>
+              <li>
+                <a
+                  href="<%= rails_admin_path %>"
+                  title="Admin Panel"
+                  class="c-header__link"
+                  data-turbolinks="false"
+                >
+                  Admin Panel
+                </a>
+              </li>
+            <% end %>
+            <% if current_user.host? %>
+              <li>
+                <a
+                  href="<%= my_rooms_path %>"
+                  title="My Listings"
+                  class="c-header__link"
+                  data-turbolinks="false"
+                >
+                  My Listings
+                </a>
+              </li>
+            <% end %>
+            <% if current_user.social_worker? %>
+              <li>
+                <a
+                  href="<%= surveys_path %>"
+                  title="My Surveys"
+                  class="c-header__link"
+                  data-turbolinks="false"
+                >
+                  My Surveys
+                </a>
+              </li>
+            <% end %>
+            <li>
+              <a
+                href="<%= conversations_path %>"
+                title="Preview previous conversations"
+                class="c-header__link c-header__link--inbox"
+                data-turbolinks="false"
+              >
+                Inbox
+              </a>
+            </li>
+            <li><%= link_to 'Log out', destroy_user_session_path, method: :delete, class: 'c-header__link' %></li>
+          <% else %>
+            <li>
+              <a
+                href="<%= root_path %>"
+                title="Sign In"
+                class="c-header__link"
+                data-turbolinks="false"
+              >
+                Sign in
+              </a>
+            </li>
+            <li>
+              <a
+                href="#sign-up"
+                title="Sign Up"
+                class="c-header__link"
+                data-turbolinks="false"
+              >
+                Sign up
+              </a>
+            </li>
+          <% end %>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>

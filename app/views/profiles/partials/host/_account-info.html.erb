@@ -1,0 +1,297 @@
+<div class="c-form c-grid__inner c-tab" id="account-info" data-target="tabs.tab">
+  <div class="c-form__wrapper c-grid__cell c-grid__cell--span-12">
+    <div class="c-form__section-heading">
+      <h2>
+        Account Info
+      </h2>
+      <p>
+        Information listed on this page will not be made public, unless you elect to include it in your profile
+      </p>
+    </div>
+
+    <div class="c-form__row c-grid__inner">
+      <div class="c-form-field <%= add_error_class(form, :role) %> c-grid__cell">
+        <%= render(
+                partial: 'partials/form/dropdown-field',
+                locals:  {
+                    form:     form,
+                    label:    'User Type*',
+                    property: :role,
+                    options:  User.humanized_profiles,
+                    prompt:   'Select one',
+                    disabled: true
+                }
+            ) %>
+      </div>
+
+      <div class="c-form-field c-grid__cell">
+        <% unless @user.role_changed? %>
+          <a href="#update-password" title="Change your password" data-turbolinks="false">Change password</a>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="c-form__row c-grid__inner">
+      <div class="c-form-field <%= add_error_class(form, :first_name) %> c-grid__cell">
+        <%= render(
+                'partials/form/text-field',
+                {
+                    form:     form,
+                    label:    'First Name*',
+                    property: :first_name
+                }
+            ) %>
+      </div>
+
+      <div class="c-form-field <%= add_error_class(form, :last_name) %> c-grid__cell">
+        <%= render(
+                'partials/form/text-field',
+                {
+                    form:     form,
+                    label:    'Last Name*',
+                    property: :last_name
+                }
+            ) %>
+      </div>
+
+      <div class="c-form-field <%= add_error_class(form, :username) %> c-grid__cell">
+        <%= render(
+                'partials/form/text-field',
+                {
+                    form:      form,
+                    label:     'Username*',
+                    help_text: 'Your public name, displayed on a profile page',
+                    property:  :username
+                }
+            ) %>
+      </div>
+
+      <div class="c-form-field <%= add_error_class(form, :email) %> c-grid__cell">
+        <%= render(
+                'partials/form/email-field',
+                {
+                    form:     form,
+                    label:    'Email Address*',
+                    property: :email
+                }
+            ) %>
+      </div>
+    </div>
+
+    <div class="c-form__row c-grid__inner">
+      <div class="c-form-field <%= add_error_class(form, :phone) %> c-grid__cell">
+        <%= render(
+                'partials/form/phone-field',
+                {
+                    form:     form,
+                    label:    'Phone Number*',
+                    property: :phone
+                }
+            ) %>
+      </div>
+
+      <div class="c-form-field <%= add_error_class(form, :dob) %> c-grid__cell">
+        <%= render(
+                "partials/form/date-field",
+                {
+                    form:     form,
+                    label:    'Date of Birth*',
+                    property: :dob,
+                    max_date: Date.today
+                }
+            ) %>
+      </div>
+    </div>
+
+    <div class="c-form__section-subheading">
+      <h4>
+        Gender identity and pronouns
+        <div
+          class="c-form__section-info"
+          data-controller="tooltip"
+          data-action="mouseover->tooltip#show mouseout->tooltip#hide"
+        >
+          <a tabindex="0" title="Show description" data-action="tooltip#show"></a>
+          <div class="c-form__section-tooltip o-tooltip hidden" data-target="tooltip.bubble">
+            <div class="o-tooltip__arrow"></div>
+            <p>
+              Each piece of information helps us best support you by: ensuring you are accessing all benefits you are
+              entitled to, allowing you to include gender identity information in your profile in whatever way makes
+              you feel safest, and ensuring we are not disproportionately serving certain ethnicities/genders.
+            </p>
+          </div>
+        </div>
+      </h4>
+    </div>
+
+    <div class="c-form__row c-grid__inner">
+      <div class="c-form-field <%= add_error_class(form, :gender) %> c-grid__cell">
+        <%= render(
+                partial: 'partials/form/dropdown-field',
+                locals:  {
+                    form:     form,
+                    label:    'How do you identify?*',
+                    property: :gender,
+                    options:  User::GENDER_VALUES.map { |val| [I18n.t("model.user.gender.#{val}"), val] },
+                    prompt:   'Choose One'
+                }
+            ) %>
+      </div>
+
+      <div class="c-form-field <%= add_error_class(form, :other_gender) %> c-grid__cell">
+        <%= render(
+                'partials/form/text-field',
+                {
+                    form:          form,
+                    property:      :other_gender,
+                    plain:         true,
+                    field_options: { placeholder: 'If other, please specify' }
+                }
+            ) %>
+      </div>
+    </div>
+
+    <div class="c-form__row c-grid__inner">
+      <div class="c-form-field <%= add_error_class(form, :transgender) %> c-grid__cell">
+        <%= render(
+                partial: 'partials/form/dropdown-field',
+                locals:  {
+                    form:     form,
+                    label:    'Do you identify as transgender?*',
+                    property: :transgender,
+                    options:  User::TRANSGENDER_VALUES.map { |val| [I18n.t("model.user.transgender.#{val}"), val] },
+                    prompt:   'Choose One'
+                }
+            ) %>
+      </div>
+    </div>
+
+    <div class="c-form__row c-grid__inner">
+      <div class="c-form-field <%= add_error_class(form, :pronouns) %> c-grid__cell">
+        <%= render(
+                partial: 'partials/form/dropdown-field',
+                locals:  {
+                    form:     form,
+                    label:    'What are your pronouns?*',
+                    property: :pronouns,
+                    options:  User::PRONOUNS_VALUES.map { |val| [I18n.t("model.user.pronouns.#{val}"), val] },
+                    prompt:   'Choose One'
+                }
+            ) %>
+      </div>
+
+      <div class="c-form-field <%= add_error_class(form, :other_pronouns) %> c-grid__cell">
+        <%= render(
+                'partials/form/text-field',
+                {
+                    form:          form,
+                    property:      :other_pronouns,
+                    plain:         true,
+                    field_options: { placeholder: 'If other, please specify' }
+                }
+            ) %>
+      </div>
+    </div>
+
+    <div class="c-form__row c-grid__inner">
+      <div class="c-form-field <%= add_error_class(form, :ethnicities) %> c-grid__cell">
+        <%= render(
+                partial: 'partials/form/multiselect',
+                locals:  {
+                    form:      form,
+                    label:     'Ethnicities*',
+                    help_text: 'Check all that apply',
+                    property:  :ethnicities,
+                    options:   User::ETHNICITIES_VALUES.map { |val| [t("model.user.ethnicity.#{val}"), val] }
+                }
+            ) %>
+      </div>
+
+      <div class="c-form-field <%= add_error_class(form, :other_ethnicity) %> c-grid__cell">
+        <%= render(
+                'partials/form/text-field',
+                {
+                    form:          form,
+                    property:      :other_ethnicity,
+                    plain:         true,
+                    field_options: { placeholder: 'If other, please specify' }
+                }
+            ) %>
+      </div>
+    </div>
+
+    <div class="c-form__options">
+      <div class="c-form-checkboxes">
+        <%= render(
+                'partials/form/checkboxes',
+                {
+                    form:       form,
+                    label:      'Would you like to include any of the following information on your public profile?',
+                    checkboxes: [
+                                    {
+                                        label:    'Gender',
+                                        property: :show_gender
+                                    },
+                                    {
+                                        label:    'Pronouns',
+                                        property: :show_pronouns
+                                    },
+                                    {
+                                        label:    'Transgender Status',
+                                        property: :show_transgender
+                                    },
+                                    {
+                                        label:    'Ethnicity',
+                                        property: :show_ethnicity
+                                    }
+                                ]
+                }
+            ) %>
+      </div>
+    </div>
+
+    <div class="c-form__section-subheading">
+      <h4>
+        Messaging Agreement
+      </h4>
+
+      <div class="c-form-field <%= add_error_class(form, :visible_messages_agreement) %> c-grid__cell">
+        <%= render(
+              partial: 'partials/form/checkbox-field',
+              locals:  {
+                form:     form,
+                property: :visible_messages_agreement,
+              }
+            ) %>
+      </div>
+      <div class="c-form-field__help-text">
+        All messages you exchange using the messaging feature of the Launchpad platform can be accessed and
+        reviewed by administrators of the Launchpad program, which includes all Freedom Forward staff members.
+        Allowing administrators to view messages creates conditions in which people can report inappropriate
+        behavior, thereby creating a safer environment for Launchpads users. Freedom Forward RESERVES the right,
+        but assumes no obligation, to review and/or remove messages for any reason at our sole discretion.
+        We assume no liability for any action or inaction regarding messages. You are proceeding as a user on
+        this platform with an understanding that messages exchanged on our platform are visible to the sender,
+        recipient, and Launchpads administrators.
+      </div>
+    </div>
+
+  </div>
+  <div class="c-form__actions c-grid__cell c-grid__cell--span-12">
+    <% if @user.role_changed? %>
+      <a
+        href="<%= profile_type_path %>"
+        title="Go to previous step"
+        class="o-btn o-btn--round o-btn--outline"
+        onclick="return confirm('Are you sure? All changes will be lost!')"
+      >
+        Previous
+      </a>
+    <% end %>
+    <%= form.submit(
+            'Next',
+            class:         'o-btn o-btn--primary o-btn--round',
+            'data-action': 'click->tabs#nextTab'
+        ) %>
+  </div>
+</div> <!-- END c-tab 0 -->

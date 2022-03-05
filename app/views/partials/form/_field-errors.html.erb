@@ -1,0 +1,9 @@
+<% property_name = local_assigns[:error_key] || local_assigns[:property] %>
+
+<% if local_assigns[:form].object %>
+  <% if local_assigns[:form].object.errors.key?(property_name) %>
+    <div class="c-form-field__help-text c-form-field__help-text--error-message">
+      <%= local_assigns[:form].object.errors.full_messages_for(property_name).join('<br>').html_safe %>
+    </div>
+  <% end %>
+<% end %>

@@ -1,0 +1,66 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Redirect",
+      "warning_code": 18,
+      "fingerprint": "02194d534b788abae243f00b1c0e40572fdc3c5ad3d732be99caf0c1c7c46eb1",
+      "check_name": "Redirect",
+      "message": "Possible unprotected redirect",
+      "file": "app/controllers/messages_controller.rb",
+      "line": 11,
+      "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
+      "code": "redirect_to(policy_scope(Conversation).find(params[:conversation_id]), :only_path => true)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "MessagesController",
+        "method": "create"
+      },
+      "user_input": "params[:conversation_id]",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "Redirect",
+      "warning_code": 18,
+      "fingerprint": "a4a942200a7f3c494445999d5a584570f63c48845bbad8e3e18972dfb545e123",
+      "check_name": "Redirect",
+      "message": "Possible unprotected redirect",
+      "file": "app/controllers/conversations_controller.rb",
+      "line": 47,
+      "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
+      "code": "redirect_to(authorize(policy_scope(Conversation).with_associations.find(params[:id])), :only_path => true)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ConversationsController",
+        "method": "invite_social_worker"
+      },
+      "user_input": "params[:id]",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "Redirect",
+      "warning_code": 18,
+      "fingerprint": "fbf45811805683936ed53d822fc019683b297b7213f2ea0f0c38827db9e66706",
+      "check_name": "Redirect",
+      "message": "Possible unprotected redirect",
+      "file": "app/controllers/conversations_controller.rb",
+      "line": 53,
+      "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
+      "code": "redirect_to(authorize(policy_scope(Conversation).with_associations.find(params[:id])), :only_path => true)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ConversationsController",
+        "method": "report"
+      },
+      "user_input": "params[:id]",
+      "confidence": "Weak",
+      "note": ""
+    }
+  ],
+  "updated": "2020-09-21 15:07:57 +0200",
+  "brakeman_version": "4.9.1"
+}

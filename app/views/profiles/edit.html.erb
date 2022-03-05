@@ -1,0 +1,107 @@
+<%= render(
+        'partials/hero',
+        {
+            icon_path: 'media/images/icons/profile-edit-icon.svg',
+            title:     'My Profile',
+        }
+    ) %>
+
+<div class="c-profile-edit c-grid" data-controller="tabs">
+  <%= render "profiles/partials/#{@user.role}" do |profile_tabs| %>
+    <%= render 'partials/form/tabs', profile_tabs: profile_tabs %>
+  <% end %>
+</div>
+
+<%= render('partials/modal', name: 'update-password', show_close: true, labelledby: 'update-password-modal-heading') do %>
+  <%= form_with(
+          model:  @user,
+          as:     :user,
+          url:    update_password_path,
+          method: :post,
+          remote: true,
+          html:   {
+              class:             'c-sign-modal',
+              'data-controller': 'password',
+              'data-action':     'ajax:error->password#formError ajax:success->password#formSuccess',
+              'data-type':       :json,
+          }
+      ) do |form| %>
+    <div class="c-sign-modal__icon">
+      <%= image_pack_tag('media/images/icons/complete-icon.svg') %>
+    </div>
+    <h1 class="c-sign-modal__heading" id="update-password-modal-heading">
+      Change your password
+    </h1>
+
+    <div class="c-sign-modal__message hidden">
+      <div data-target="password.messageContainer"></div>
+
+      <a href="#" data-action="modal#close">Close</a>
+    </div>
+
+    <div class="c-sign-modal__fields" data-target="password.formFields">
+      <template data-target="password.errorsTemplate">
+        <div class="c-sign-modal__errors" data-target="password.errors"></div>
+      </template>
+
+      <div class="c-sign-modal__message hidden">
+        <div data-target="password.messageContainer"></div>
+
+        <a href="#" data-action="modal#close">Close</a>
+      </div>
+
+      <div class="c-sign-modal__input">
+        <%= render(
+                partial: 'partials/form/text-field',
+                locals:  {
+                    form:          form,
+                    property:      :current_password,
+                    plain:         true,
+                    field_options: {
+                        autocomplete: 'current-password',
+                        placeholder:  'Current password*',
+                        type:         :password
+                    }
+                }
+            ) %>
+      </div>
+
+      <div class="c-sign-modal__input">
+        <%= render(
+                partial: 'partials/form/text-field',
+                locals:  {
+                    form:          form,
+                    property:      :password,
+                    plain:         true,
+                    field_options: {
+                        autocomplete: 'new-password',
+                        type:         'password',
+                        placeholder:  'New password*'
+                    }
+                }
+            ) %>
+      </div>
+
+      <div class="c-sign-modal__input">
+        <%= render(
+                partial: 'partials/form/text-field',
+                locals:  {
+                    form:          form,
+                    property:      :password_confirmation,
+                    plain:         true,
+                    field_options: {
+                        autocomplete: 'new-password',
+                        type:         'password',
+                        placeholder:  'Password confirmation*'
+                    }
+                }
+            ) %>
+      </div>
+
+      <div class="c-sign-modal__submit">
+        <%= form.submit('Submit', class: 'o-btn o-btn--round o-btn--primary') %>
+      </div>
+    </div>
+  <% end %>
+
+<% end %>

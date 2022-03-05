@@ -1,0 +1,90 @@
+<div class="c-grid c-waiting-list" data-controller="surveys">
+  <%= form_with(
+          url:    surveys_path,
+          model:  @filters,
+          method: :get,
+          local:  true,
+          class:  'c-grid__inner',
+          html:   {
+              'data-target': 'surveys.form'
+          }
+      ) do |f| %>
+    <div class="c-grid__cell c-grid__cell--span-12 c-waiting-list__hero">
+      <h1 class="c-waiting-list__heading">
+        Launchpads Waiting List
+      </h1>
+      <p class="c-waiting-list__subheading">
+        Once approved, youth from this list will gain full access to the Launchpads App
+      </p>
+    </div>
+
+    <div class="c-grid__cell c-grid__cell--span-4 c-waiting-list__sort-field" data-action="change->surveys#onChange">
+      <%= render(
+              partial: 'partials/form/dropdown-field',
+              locals:  {
+                  form:       f,
+                  property:   :status,
+                  hide_label: true,
+                  options:    UserFilters.status.options
+              }
+          ) %>
+    </div>
+
+    <div class="c-grid__cell c-grid__cell--span-4 c-waiting-list__sort-field" data-action="change->surveys#onChange">
+      <%= render(
+              partial: 'partials/form/dropdown-field',
+              locals:  {
+                  form:       f,
+                  property:   :sort_by,
+                  hide_label: true,
+                  options:    UserFilters.sort_by.options
+              }
+          ) %>
+    </div>
+
+    <div class="c-grid__cell c-waiting-list__filters">
+      <div class="c-waiting-list__keyword-field">
+        <%= render(
+                partial: 'partials/form/text-field',
+                locals:  {
+                    form:          f,
+                    property:      :keyword,
+                    plain:         true,
+                    field_options: {
+                        placeholder: 'Search by name'
+                    }
+                }
+            ) %>
+      </div>
+
+      <div class="c-waiting-list__filter-actions">
+        <%= f.button(:submit, title: 'Apply filters', name: '') do %>
+          <%= image_pack_tag('media/images/icons/search-icon.svg', alt: 'Search') %>
+        <% end %>
+        <a href="<%= surveys_path %>" title="Reset filters">
+          <%= image_pack_tag('media/images/icons/close-primary-icon.svg', alt: 'Search') %>
+        </a>
+      </div>
+    </div>
+
+    <% if @pagy.count > 0 %>
+      <% @users.each do |user| %>
+        <div class="c-grid__cell c-grid__cell--span-4">
+          <%= render 'surveys/user', user: user, link_to: fill_surveys_path(user) %>
+        </div>
+      <% end %>
+
+      <div class="c-grid__cell c-grid__cell--span-12 c-pagination">
+        <%= pagy_nav_js(@pagy).html_safe %>
+      </div>
+    <% else %>
+      <div class="c-grid__cell c-grid__cell--span-12">
+        <% if @filters.filter_with_status? %>
+          There are no users assigned to you with status <strong><%= @filters.status %></strong>!
+        <% else %>
+          There are no users assigned to you!
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

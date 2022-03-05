@@ -1,0 +1,73 @@
+<%
+  # USAGE INSTRUCTIONS
+  #   if `date_format` is passed as `{ datepicker: , ruby: }` it formats date accordingly
+  #   else it uses default date formats for both Ruby and JS
+  #
+  #   if `min_date` is passed it locks dates picked to be > `min_date`. Default is the beginning of 1980.
+  #   if `max_date` is passed it locks dates picked to be < `max_date`. Default is the end of 2030.
+
+  field_classes = %w[c-form-field__input c-form-field__input--datepicker]
+  field_classes << 'c-form-field__input--plain' if local_assigns.fetch(:plain, false)
+  field_classes << local_assigns[:options].delete(:container_class) if local_assigns.dig(:options, :container_class)
+  date_format = local_assigns.fetch(:date_format, {})
+  datepicker_date_format = date_format.fetch(:datepicker, 'mm-dd-yyyy')
+  ruby_date_format = date_format.fetch(:ruby, '%m-%d-%Y')
+  min_date = local_assigns.fetch(:min_date, Date.new(1920, 1, 1))
+  max_date = local_assigns.fetch(:max_date, Date.new(2030, 12, 31))
+  value = local_assigns[:form].object.try(local_assigns[:property])
+%>
+
+<% if local_assigns.key?(:label) %>
+  <%= local_assigns[:form].label(
+          local_assigns[:property],
+          local_assigns[:label],
+          class: 'c-form-field__label'
+      ) %>
+<% end %>
+<% if local_assigns.key?(:help_text) %>
+  <div class="c-form-field__help-text">
+    <%= local_assigns[:help_text] %>
+  </div>
+<% end %>
+
+<div
+  class="c-form__section-info"
+  data-controller="tooltip"
+  data-action="mouseover->tooltip#show mouseout->tooltip#hide"
+>
+  <a tabindex="0" title="Show description" data-action="tooltip#show"></a>
+  <div class="c-form__section-tooltip o-tooltip hidden" data-target="tooltip.bubble">
+    <div class="o-tooltip__arrow" data-target="tooltip.arrow"></div>
+    <p>
+      You can type in the date using your keyboard or pick it from calendar.
+      <% if local_assigns.key?(:min_date) %>
+        <br>The earliest date you can set is <%= min_date.strftime(ruby_date_format) %>
+      <% end %>
+      <% if local_assigns.key?(:max_date) %>
+        <br>The latest date you can set is <%= max_date.strftime(ruby_date_format) %>
+      <% end %>
+    </p>
+  </div>
+</div>
+
+<%= render 'partials/form/field-errors', local_assigns %>
+
+<div
+  class="<%= field_classes.join(' ') %>"
+  data-controller="datepicker"
+  data-datepicker-format="<%= datepicker_date_format %>"
+  data-datepicker-min-date="<%= min_date.strftime(ruby_date_format) %>"
+  data-datepicker-max-date="<%= max_date.strftime(ruby_date_format) %>"
+>
+  <%= local_assigns[:form].text_field(
+          local_assigns[:property],
+          {
+              'data-target': 'datepicker.input',
+              'data-action': 'keyup->datepicker#keyup',
+              value:         value&.strftime(ruby_date_format)
+          }.merge(local_assigns.fetch(:field_options, {}))
+      ) %>
+  <a class="c-form-field__input-picker" title="Open datepicker" data-action="datepicker#show">
+    <%= image_pack_tag('media/images/icons/arrow-down.svg', alt: 'Open datepicker') %>
+  </a>
+</div>

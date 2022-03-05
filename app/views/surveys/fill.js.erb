@@ -1,0 +1,5 @@
+{
+  const form = document.querySelector('#survey_form');
+
+  form.innerHTML = "<%= escape_javascript(render('surveys/partials/fill-form').strip.html_safe) %>";
+}

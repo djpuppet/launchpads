@@ -1,0 +1,103 @@
+<div class="c-form c-grid__inner c-tab hidden" id="personal-info" data-target="tabs.tab">
+  <div class="c-form__wrapper c-grid__cell c-grid__cell--span-12">
+    <div class="c-form__section-heading">
+      <h2>
+        Personal Info
+      </h2>
+      <p>
+        Tell us a little more about yourself.
+      </p>
+    </div>
+
+    <div class="c-form__row c-grid__inner">
+      <div class="c-form-field <%= add_error_class(form, :photos) %> c-form-field--wide c-grid__cell">
+        <%= render(
+                partial: 'partials/form/photos-field',
+                locals:  {
+                    form:      form,
+                    label:     'Photos',
+                    help_text: 'Upload photos of yourself to add to your profile',
+                    property:  :photos,
+                }
+            ) %>
+      </div>
+    </div>
+
+    <div class="c-form__row c-grid__inner">
+      <div class="c-form-field <%= add_error_class(form, :about) %> c-form-field--wide c-grid__cell">
+        <%= render(
+                'partials/form/textarea-field',
+                {
+                    form:       form,
+                    label:     'About Me*',
+                    help_text: "Tell prospective hosts a little more about yourself, " +
+                               "such as if you're going to school, where you work, " +
+                               "what you like to do with your free time, and how you like to live at home. " +
+                               "What are you looking for in a house?  Do you have specific needs? " +
+                               "For example, are you allergic to animals?  Do you need a parking space? " +
+                               "Do you have pets?",
+                    property:  :about,
+                }
+            ) %>
+      </div>
+    </div>
+
+    <div class="c-form__row c-grid__inner">
+      <div class="c-form-field <%= add_error_class(form, :education) %> c-form-field--wide c-grid__cell">
+        <%= render(
+                'partials/form/text-field',
+                {
+                    form:          form,
+                    label:         'Education',
+                    property:      :education,
+                    plain:         true,
+                    field_options: { placeholder: 'How far along in your education are you?' }
+                }
+            ) %>
+      </div>
+    </div>
+
+    <div class="c-form__row c-grid__inner">
+      <div class="c-form-field <%= add_error_class(form, :school) %> c-grid__cell">
+        <%= render(
+                'partials/form/text-field',
+                {
+                    form:          form,
+                    label:         'School or College',
+                    property:      :school,
+                    plain:         true,
+                    field_options: { placeholder: 'What school are you attending or did you attend?' }
+                }
+            ) %>
+      </div>
+
+      <div class="c-form-field <%= add_error_class(form, :work) %> c-grid__cell">
+        <%= render(
+                'partials/form/text-field',
+                {
+                    form:          form,
+                    label:         'Work',
+                    property:      :work,
+                    plain:         true,
+                    field_options: { placeholder: 'Where do you currently work?' }
+                }
+            ) %>
+      </div>
+    </div>
+  </div>
+  <div class="c-form__actions c-grid__cell c-grid__cell--span-12">
+    <a
+      href="#"
+      title="Go to previous step"
+      class="o-btn o-btn--round o-btn--outline"
+      data-action="click->tabs#previousTab"
+    >
+      Previous
+    </a>
+    <%= form.submit(
+            'Next',
+            class:         'o-btn o-btn--primary o-btn--round',
+            'data-action': 'click->tabs#nextTab'
+        ) %>
+  </div>
+</div> <!-- END c-tab 1 -->

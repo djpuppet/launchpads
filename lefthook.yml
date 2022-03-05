@@ -1,0 +1,27 @@
+pre-commit:
+  parallel: true
+  commands:
+    js:
+      glob: "*.{js}"
+      run: yarn prettier --write {staged_files} && yarn eslint --fix {staged_files} && git add {staged_files}
+    css:
+      glob: "*.{css,scss}"
+      run: yarn prettier --write {staged_files} && yarn stylelint --fix {staged_files} && git add {staged_files}
+    yarn-audit:
+      glob: "(package.json|yarn.lock)"
+      run: yarn audit
+    yarn-outdated:
+      glob: "(package.json|yarn.lock)"
+      run: yarn outdated
+    brakeman:
+      run: bundle exec brakeman -q --no-pager
+    bundle-audit:
+      run: bundle exec bundle-audit check --update
+    rubocop:
+      glob: "*.{rb,rake}"
+      run: bundle exec rubocop {staged_files} --format=emacs --force-exclusion --display-cop-names -a && git add {staged_files}
+pre-push:
+  commands:
+    rspec:
+      glob: "*.{rb}"
+      run: bundle exec rspec spec

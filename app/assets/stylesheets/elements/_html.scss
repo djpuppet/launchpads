@@ -1,0 +1,11 @@
+@use '../tools' as *;
+@use '../settings/fonts' as *;
+
+html {
+  font: {
+    family: $font-family;
+    size: 16px;
+  }
+  line-height: 21px;
+  @include theme-prop(color, text);
+}

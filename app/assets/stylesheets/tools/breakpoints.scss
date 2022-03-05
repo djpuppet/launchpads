@@ -1,0 +1,63 @@
+@use 'sass:meta';
+@use './bp-helpers' as helpers;
+
+@mixin each($size: null) {
+  @if $size == null {
+    $size: helpers.all-bps();
+  }
+
+  @if meta.type-of($size) == 'list' {
+    @each $current in $size {
+      @include each($current) using($i) {
+        @content ($i);
+      }
+    }
+  }
+  @else {
+    @include helpers.bp($size) {
+      @content ($size);
+    }
+  }
+}
+
+@mixin only($size) {
+  @include each($size) using ($size) {
+    @content;
+  }
+}
+
+@mixin min($size) {
+  $min: helpers.bp-min($size);
+
+  @if $min != null {
+    @media (min-width: $min) {
+      @content;
+    }
+  }
+  @else {
+    @content;
+  }
+}
+
+@mixin max($size) {
+  $max: helpers.bp-max($size);
+
+  @if $max != null {
+    @media (max-width: $max) {
+      @content;
+    }
+  }
+  @else {
+    @content;
+  }
+}
+
+@mixin padding($edge: null, $grid-prop: 'gutter') {
+  $main-prop: 'padding';
+  @include helpers.spacing($edge, $grid-prop, $main-prop);
+}
+
+@mixin margin($edge: null, $grid-prop: 'gutter') {
+  $main-prop: 'margin';
+  @include helpers.spacing($edge, $grid-prop, $main-prop);
+}

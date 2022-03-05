@@ -1,0 +1,24 @@
+<table style="width: 100%;">
+  <thead>
+  <tr>
+    <th>Author</th>
+    <th style="width: 75%;">Content</th>
+    <th>Created at</th>
+  </tr>
+  </thead>
+  <tbody>
+    <% messages.each do |msg| %>
+    <tr>
+      <td>
+        <p><%= msg.user.username || msg.user.name %></p>
+      </td>
+      <td>
+        <p><%= msg.content %></p>
+      </td>
+      <td>
+        <p><%= msg.created_at %></p>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

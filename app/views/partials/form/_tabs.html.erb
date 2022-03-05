@@ -1,0 +1,32 @@
+<%
+  profile_tabs = local_assigns.fetch(:profile_tabs, [])
+%>
+
+<div class="c-form-tabs c-grid__inner">
+  <div class="c-form-tabs__wrapper c-grid__cell c-grid__cell--span-12">
+    <ul
+      class="c-form-tabs__list <%= 'c-form-tabs__list--single' if profile_tabs.length == 1 %>"
+      data-target="tabs.list"
+    >
+      <% profile_tabs.each do |tab| %>
+        <li class="c-form-tabs__tab <%= 'active' if tab[:active] %>" role="tab">
+          <a href="#<%= tab[:anchor] %>" title="<%= tab[:label] %>" data-action="tabs#onSelectorClick">
+            <span class="c-form-tabs__circle">
+            <%= image_pack_tag(
+                    "media/images/icons/#{tab[:icon]}-icon.svg",
+                    alt:   tab[:label],
+                    class: 'c-form-tabs__icon'
+                ) %>
+              <%= image_pack_tag(
+                      "media/images/icons/#{tab[:icon]}-icon--active.svg",
+                      alt:   tab[:label],
+                      class: 'c-form-tabs__icon c-form-tabs__icon--active'
+                  ) %>
+            </span>
+            <span class="c-form-tabs__label"><%= tab[:label] %></span>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

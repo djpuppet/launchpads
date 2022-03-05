@@ -1,0 +1,104 @@
+@use 'sass:map';
+@use 'sass:math';
+@use '../settings' as *;
+
+@function gutter($size) {
+  @if not map.has-key($grid-gutter, $size) {
+    @error 'Invalid style specified! Choose one of #{map.keys($grid-gutter)}';
+  }
+
+  @return map.get($grid-gutter, $size);
+}
+
+@function margin($size) {
+  @if not map.has-key($grid-margin, $size) {
+    @error 'Invalid style specified! Choose one of #{map.keys($grid-margin)}';
+  }
+
+  @return map.get($grid-margin, $size);
+}
+
+@mixin container-max-width {
+  max-width: $grid-max-width;
+}
+
+@mixin inner-width($size) {
+  $gutter: gutter($size);
+  $margin: margin($size);
+  width: calc(100% + #{$gutter * 2});
+  max-width: calc(100% - #{$margin * 2});
+
+  @supports (display: grid) {
+    width: 100%;
+    max-width: calc(100% - #{$margin * 2});
+  }
+}
+
+@mixin inner-margins($size) {
+  $gutter: gutter($size);
+  $margin: margin($size);
+  margin-left: -#{$gutter / 2};
+  margin-right: -#{$gutter / 2};
+  margin-bottom: -#{$gutter / 2};
+  padding-left: $margin;
+  padding-right: $margin;
+
+  @supports (display: grid) {
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+  }
+}
+
+@mixin inner-grid-templates($size) {
+  $columns: map.get($grid-columns, $size);
+  $gutter: gutter($size);
+  grid-template-columns: repeat(#{$columns}, 1fr);
+  grid-column-gap: $gutter;
+  grid-row-gap: #{$gutter / 2};
+}
+
+@mixin cell-width($size, $span: 1) {
+  @if not map.has-key($grid-columns, $size) {
+    @error 'Invalid style specified! Choose one of #{map.keys($grid-columns)}';
+  }
+
+  $columns: map.get($grid-columns, $size);
+  $gutter: gutter($size);
+  $span: math.min($columns, $span);
+
+  $columns-width: '(100% / #{$columns} - #{$gutter}) * #{$span}';
+  $gutters-width: '#{($span - 1) * $gutter}';
+
+  width: calc(#{$columns-width} + #{$gutters-width});
+  max-width: calc(#{$columns-width} + #{$gutters-width});
+
+  @supports (display: grid) {
+    width: 100%;
+    max-width: 100%;
+    grid-column: span #{$span};
+  }
+}
+
+@mixin cell-margins($size) {
+  $gutter: gutter($size);
+  margin-left: #{$gutter / 2};
+  margin-right: #{$gutter / 2};
+  margin-bottom: #{$gutter / 2};
+
+  @supports (display: grid) {
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+  }
+}
+
+@mixin cell-span($size) {
+  $max-columns: math.max(map.values($grid-columns) ...);
+
+  @for $span from 1 through $max-columns {
+    &--span-#{$span} {
+      @include cell-width($size, $span);
+    }
+  }
+}

@@ -1,0 +1,7 @@
+en:
+  profile:
+    confirm_profile_message:
+      youth: 'Thanks for creating your profile! Your social worker needs to approve your account before you are able to connect with people on Launchpads. For now, sit tight and browse the available rooms!'
+      host: 'Thanks for submitting your form! Once your profile is approved by a member of the Launchpads team, you will be able to connect with prospective renters.  Create a listing to share details about the space for rent!'
+      social_worker: 'Thanks for submitting your information and for your interest in participating in Launchpads as a social worker. Social workers play an integral part in our program and are responsible for approving youth who want to join the program. We are following up with the City and County of San Francisco, and we expect to approve your participation soon. In the meantime, sit tight and check out the housing options available to youth.'
+    already_confirmed_message: 'Profile updated.'

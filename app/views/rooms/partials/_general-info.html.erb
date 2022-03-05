@@ -1,0 +1,174 @@
+<div class="c-form c-grid__inner c-tab" id="general-info" data-target="tabs.tab">
+  <div class="c-form__wrapper c-grid__cell c-grid__cell--span-12">
+    <div class="c-form__section-heading">
+      <h2>
+        General Info
+      </h2>
+      <p>
+        Tell us about the space you want to rent. All of this information will be available to prospective renters in your public profile.
+      </p>
+    </div>
+
+    <div class="c-form__row c-grid__inner">
+      <div class="c-form-field <%= add_error_class(form, :title) %> c-form-field--wide c-grid__cell">
+        <%= render(
+                'partials/form/text-field',
+                {
+                    form:     form,
+                    label:    'Title*',
+                    property: :title
+                }
+            ) %>
+      </div>
+
+      <div class="c-form-field <%= add_error_class(form, :city) %> c-form-field c-grid__cell">
+        <%= render(
+                partial: 'partials/form/dropdown-field',
+                locals:  {
+                    form:     form,
+                    label:    'City*',
+                    property: :city,
+                    options:  Room::CITY_VALUES.map { |p| [I18n.t("model.room.city.#{p}"), p] },
+                    prompt:   'Choose One'
+                }
+            ) %>
+      </div>
+
+      <div class="c-form-field <%= add_error_class(form, :other_city) %> c-grid__cell">
+        <%= render(
+                'partials/form/text-field',
+                {
+                    form:          form,
+                    property:      :other_city,
+                    plain:         true,
+                    field_options: { placeholder: 'If other, please specify' }
+                }
+            ) %>
+      </div>
+    </div>
+
+    <div class="c-form__row c-grid__inner">
+      <div class="c-form-field <%= add_error_class(form, :move_in_date) %> c-grid__cell">
+        <%= render(
+                "partials/form/date-field",
+                {
+                    form:     form,
+                    label:    'Ideal Move in Date*',
+                    property: :move_in_date,
+                    min_date: Date.today
+                }
+            ) %>
+      </div>
+    </div>
+
+    <div class="c-form__row c-grid__inner">
+      <div class="c-form-field <%= add_error_class(form, :duration_of_stay) %> c-form-field--wide c-grid__cell">
+        <%= render(
+                partial: 'partials/form/range-field',
+                locals:  {
+                    form:          form,
+                    label:         'Duration of Stay*',
+                    help_text:     'How long is the room available?',
+                    property:      :duration_of_stay,
+                    field_options: {
+                        min:  1,
+                        max:  12,
+                        step: 1
+                    },
+                    point_labels:  ['1 month', '1+ Year'],
+                    value_label:   {
+                        label:  '<span></span> month',
+                        plural: '<span></span> months',
+                    }
+                }
+            ) %>
+      </div>
+    </div>
+
+    <div class="c-form__row c-grid__inner">
+      <div class="c-form-field <%= add_error_class(form, :rent) %> c-grid__cell">
+        <%= render(
+                "partials/form/currency-field",
+                {
+                    form:          form,
+                    label:         'Rent*',
+                    help_text:     'What is the rent per month?',
+                    property:      :rent,
+                    field_options: {
+                        min: 0
+                    }
+                }
+            ) %>
+      </div>
+
+      <div class="c-form-field <%= add_error_class(form, :utilities) %> c-grid__cell">
+        <%= render(
+                "partials/form/currency-field",
+                {
+                    form:          form,
+                    label:         'Utilities*',
+                    help_text:     'How much are utilities per month?',
+                    property:      :utilities,
+                    field_options: {
+                        min: 0
+                    }
+                }
+            ) %>
+      </div>
+
+    </div>
+
+    <div class="c-form__row c-grid__inner">
+      <div class="c-form-field <%= add_error_class(form, :property_type) %> c-grid__cell">
+        <%= render(
+                partial: 'partials/form/dropdown-field',
+                locals:  {
+                    form:     form,
+                    label:    'Property Type*',
+                    property: :property_type,
+                    options:  Room::PROPERTY_VALUES.map { |p| [I18n.t("model.room.property_type.#{p}"), p] },
+                    prompt:   'Choose One'
+                }
+            ) %>
+      </div>
+
+      <div class="c-form-field <%= add_error_class(form, :room_type) %> c-grid__cell">
+        <%= render(
+                partial: 'partials/form/dropdown-field',
+                locals:  {
+                    form:     form,
+                    label:    'Room Type*',
+                    property: :room_type,
+                    options:  Room::ROOM_VALUES.map { |r| [I18n.t("model.room.room_type.#{r}"), r] },
+                    prompt:   'Choose One'
+                }
+            ) %>
+      </div>
+
+      <div class="c-form-field <%= add_error_class(form, :furnished) %> c-grid__cell">
+        <%= render(
+                partial: 'partials/form/dropdown-field',
+                locals:  {
+                    form:      form,
+                    label:     'Is the room furnished*',
+                    property:  :furnished,
+                    boolean:   true,
+                    options:   [
+                                   ['Yes', 1],
+                                   ['No', 0],
+                               ],
+                    prompt:    'Choose One'
+                }
+            ) %>
+      </div>
+    </div>
+  </div>
+
+  <div class="c-form__actions c-grid__cell c-grid__cell--span-12">
+    <%= form.submit(
+            'Next',
+            class:         'o-btn o-btn--primary o-btn--round',
+            'data-action': 'click->tabs#nextTab'
+        ) %>
+  </div>
+</div>

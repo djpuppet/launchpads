@@ -1,0 +1,44 @@
+<%
+  modal_class = ['c-modal']
+  modal_class << 'open' if local_assigns.fetch(:open, false)
+
+  wrapper_class = ['c-modal__wrapper']
+  wrapper_class << 'c-modal__wrapper--primary' if local_assigns.fetch(:primary, false)
+  wrapper_class << 'c-modal__wrapper--closeable' if local_assigns.fetch(:show_close, false)
+%>
+
+<div
+  id="<%= local_assigns.fetch(:name, '') %>"
+  class="<%= modal_class.join(' ') %>"
+  data-controller="modal"
+  data-modal-name="<%= local_assigns.fetch(:name, '') %>"
+  <%= 'data-modal-closeable' if local_assigns.fetch(:show_close, false) %>
+  role="dialog"
+  aria-modal="true"
+  <%= "aria-labelledby=\"#{local_assigns[:labelledby]}\"" if local_assigns.key?(:labelledby) %>
+  <%= "aria-describedby=\"#{local_assigns[:describedby]}\"" if local_assigns.key?(:describedby) %>
+  tabindex="-1"
+>
+  <div class="c-modal__overlay" data-target="modal.overlay"></div>
+  <div class="<%= wrapper_class.join(' ') %>" data-target="modal.wrapper">
+    <% if local_assigns.fetch(:show_close, false) %>
+      <a
+        href="#"
+        data-action="modal#close"
+        title="Close this window"
+        class="c-modal__close"
+      >
+        <%= image_pack_tag('media/images/icons/close-icon.svg', alt: 'Close') %>
+      </a>
+    <% end %>
+    <div class="c-modal__content" data-target="modal.content">
+      <% if local_assigns.fetch(:passive, false) %>
+        <%= yield %>
+      <% else %>
+        <template data-target="modal.template">
+          <%= yield %>
+        </template>
+      <% end %>
+    </div>
+  </div>
+</div>

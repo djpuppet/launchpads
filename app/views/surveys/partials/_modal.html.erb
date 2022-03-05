@@ -1,0 +1,33 @@
+<%= render(
+        'partials/modal',
+        open:        true,
+        primary:     true,
+        passive:     true,
+        labelledby:  'form-sent-heading',
+        describedby: 'form-sent-description'
+    ) do %>
+  <div class="c-form-completed">
+    <div class="c-form-completed__icon">
+      <%= image_pack_tag('media/images/icons/complete-inverted-icon.svg') %>
+    </div>
+    <h1 class="c-form-completed__heading" id="form-sent-heading">
+      Approval Denied
+    </h1>
+    <p class="c-form-completed__paragraph" id="form-sent-description">
+      At this time, We cannot approve youth for Launchpads.
+    </p>
+    <div class="c-form-completed__button">
+      <a
+        href="<%= surveys_path %>"
+        title="Go back to youths list"
+        class="o-btn o-btn--round"
+        data-turbolinks="false"
+      >
+        Okay
+      </a>
+    </div>
+    <div class="c-form-completed__gloss">
+      If this decision was made in error, please <a href="https://www.wearelaunchpads.org/contact" data-turbolinks="false">contact us</a>.
+    </div>
+  </div>
+<% end %>

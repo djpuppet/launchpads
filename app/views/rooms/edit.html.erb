@@ -1,0 +1,48 @@
+<%
+  profile_tabs = [
+      {
+          icon:   'general-info',
+          label:  'General Info',
+          active: true,
+          anchor: 'general-info',
+      },
+      {
+          icon:   'room-details',
+          label:  'Room Details',
+          anchor: 'room-details',
+      },
+      {
+          icon:   'preferences',
+          label:  'Preferences',
+          anchor: 'preferences',
+      },
+  ]
+%>
+
+<%= render(
+        'partials/hero',
+        {
+            icon_path: 'media/images/icons/room-edit-icon.svg',
+            title:     'Edit Listing',
+        }
+    ) %>
+
+<div class="c-room-edit c-grid" data-controller="tabs">
+  <%= render 'partials/form/tabs', profile_tabs: profile_tabs %>
+  <%= form_with(
+          model:  @room,
+          url:    room_path(@room),
+          method: :patch,
+          html:   {
+              'data-controller':        'direct-upload',
+              'data-action':            'direct-upload#start validation:complete->direct-upload#updatePreview',
+              'data-target':            'tabs.form',
+              'data-validation-url':    validate_room_url(@room),
+              'data-validation-method': :post,
+          }
+      ) do |form| %>
+    <%= render 'rooms/partials/general-info', form: form %>
+    <%= render 'rooms/partials/room-details', form: form %>
+    <%= render 'rooms/partials/preferences', form: form %>
+  <% end %>
+</div>

@@ -1,0 +1,49 @@
+<%
+  testimonials = [
+      {
+          content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut ' +
+                       'labore et dolore magna aliqua. Ut enim ad minim veniam.',
+          author:  'Jane Doe',
+          title:   'Title, Launchpads'
+      },
+      {
+          content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut ' +
+                       'labore et dolore magna aliqua. Ut enim ad minim veniam.',
+          author:  'Jane Doe',
+          title:   'Title, Launchpads'
+      },
+      {
+          content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut ' +
+                       'labore et dolore magna aliqua. Ut enim ad minim veniam.',
+          author:  'Jane Doe',
+          title:   'Title, Launchpads'
+      },
+  ]
+%>
+
+<section class="c-landing-testimonials">
+  <div class="c-grid">
+    <div class="c-grid__inner">
+      <div class="c-grid__cell c-grid__cell--span-12">
+        <h2 class="c-landing-testimonials__heading">
+          Launchpads Talk
+        </h2>
+      </div>
+      <% testimonials.each do |testimonial| %>
+        <div class="c-grid__cell c-grid__cell--span-4">
+          <div class="c-landing-testimonials__box">
+            <div class="c-landing-testimonials__content">
+              "<%= testimonial[:content] %>"
+            </div>
+            <div class="c-landing-testimonials__author">
+              <%= testimonial[:author] %>
+            </div>
+            <div class="c-landing-testimonials__title">
+              <%= testimonial[:title] %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>

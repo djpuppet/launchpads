@@ -1,0 +1,11 @@
+@use '../tools' as *;
+
+main {
+  --main-height: calc(100vh - 240px);
+  min-height: var(--main-height);
+  padding-top: 40px;
+
+  @include bp-min(desktop) {
+    padding-top: 85px;
+  }
+}

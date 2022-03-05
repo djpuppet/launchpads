@@ -1,0 +1,11 @@
+@mixin add {
+  box-shadow: 0 0 1px 3px rgba(59, 153, 252, 0.7);
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
+  box-shadow: 0 0 0 3px -moz-mac-focusring; /* Firefox */
+  outline: auto 0 -webkit-focus-ring-color; /* Webkit, Safari */
+}
+
+@mixin reset {
+  box-shadow: none;
+  outline: none;
+}

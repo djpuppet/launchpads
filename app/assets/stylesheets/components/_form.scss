@@ -1,0 +1,247 @@
+@use '../tools' as *;
+
+.c-form {
+  //
+}
+
+.c-form__wrapper {
+  padding-top: 10px;
+
+  border: 1px solid;
+  @include theme-prop(border-color, form-border);
+  border-radius: 3px;
+
+  @include bp-min(tablet) {
+    padding-top: 45px;
+  }
+
+  @include bp-min(desktop) {
+    padding-bottom: 30px;
+  }
+}
+
+.c-form__section-heading,
+.c-form__section-subheading,
+.c-form__row,
+.c-form__options {
+  margin: 0 15px 30px;
+
+  @include bp-min(tablet) {
+    margin: 0 30px 65px;
+  }
+
+  @include bp-min(desktop) {
+    margin: 0 80px 65px;
+  }
+}
+
+.c-form__section-heading {
+  padding-bottom: 30px;
+  border-bottom: 1px solid;
+  @include theme-prop(border-color, border);
+
+  @include theme-prop(--heading-color, primary);
+  @include theme-prop(--text-color, text);
+
+  h2 {
+    margin: 0;
+    padding: 0;
+    font: {
+      size: 20px;
+      weight: 600;
+    }
+    line-height: 32px;
+    color: var(--heading-color);
+  }
+
+  p {
+    margin: 0;
+    padding: 0;
+    font: {
+      size: 16px;
+      weight: 300;
+    }
+    line-height: 24px;
+    color: var(--text-color);
+  }
+
+  @include bp-min(tablet) {
+    h2 {
+      font-size: 25px;
+      line-height: 40px;
+    }
+
+    p {
+      line-height: 25px;
+    }
+  }
+
+  &--errors {
+    @include theme-prop(--heading-color, error);
+  }
+}
+
+.c-form__section-subheading {
+  margin-top: 50px;
+
+  h4 {
+    margin: 0;
+    padding: 0;
+    font: {
+      size: 16px;
+      weight: 300;
+    }
+    line-height: 24px;
+    text-transform: uppercase;
+    @include theme-prop(color, primary);
+  }
+
+  &--separated {
+    padding-top: 25px;
+    border-width: 1px 0 0 0;
+    border-style: solid;
+    @include theme-prop(border-color, primary);
+    border-radius: 0;
+  }
+}
+
+.c-form__section-info {
+  display: inline-block;
+
+  a {
+    width: 14px;
+    height: 14px;
+    display: block;
+    cursor: pointer;
+    border: 1px solid;
+    @include theme-prop(color, primary);
+    border-radius: 50%;
+    background: transparent url('../images/icons/info.svg') top center;
+  }
+
+  &.active a {
+    @include theme-prop(background-color, primary);
+    background-position: bottom center;
+    pointer-events: none;
+  }
+
+  @include bp-min(tablet) {
+    position: relative;
+  }
+}
+
+.c-form__section-tooltip {
+  min-width: 240px;
+  max-width: calc(100vw - #{grid-margin(phone) * 2});
+
+  position: absolute;
+  top: 30px;
+  right: -7px;
+
+  @include bp-only(phone) {
+    min-width: 70%;
+    top: auto;
+    transform: translateY(15px);
+    left: #{grid-margin(phone)};
+    right: #{grid-margin(phone)};
+  }
+
+  font-size: 16px;
+  line-height: 22px;
+  text-transform: none;
+  @include theme-prop(color, input-help);
+
+  @include bp-min(tablet) {
+    min-width: 200px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+}
+
+.c-form__row {
+  padding: 0;
+  max-width: calc(100% - 30px);
+  grid-row-gap: 32px;
+
+  @include bp-min(tablet) {
+    max-width: calc(100% - 60px);
+    margin-bottom: 30px;
+  }
+
+  @include bp-min(desktop) {
+    max-width: calc(100% - 160px);
+    margin-bottom: 80px;
+    grid-row-gap: 80px;
+  }
+
+  &--nested {
+    margin: 0;
+    padding: 0;
+    padding-left: 25px;
+    max-width: calc(100% - 25px);
+    position: relative;
+
+    @include bp-min(desktop) {
+      padding-left: 0;
+      max-width: 100%;
+    }
+  }
+}
+
+.c-form__row-remove {
+  position: absolute;
+  left: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 24px;
+  height: 24px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @include theme-prop(background-color, primary);
+  border-radius: 50%;
+  opacity: 0.8;
+
+  img {
+    width: 12px;
+    height: 12px;
+    opacity: 0.8;
+  }
+
+  @include bp-min(desktop) {
+    left: -30px;
+  }
+}
+
+.c-form__options {
+  margin-top: 64px;
+  padding-top: 20px;
+  border-top: 1px solid;
+  @include theme-prop(border-color, primary);
+}
+
+.c-form__actions {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-end;
+
+  :not(:last-child) {
+    margin-right: 5px;
+  }
+
+  @include bp-min(tablet) {
+    margin-top: 50px;
+
+    :not(:last-child) {
+      margin-right: 30px;
+    }
+  }
+
+  @include bp-min(desktop) {
+    margin-top: 50px;
+    margin-bottom: 100px;
+  }
+}

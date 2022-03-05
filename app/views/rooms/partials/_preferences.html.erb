@@ -1,0 +1,111 @@
+<div class="c-form c-grid__inner c-tab" id="preferences" data-target="tabs.tab">
+  <div class="c-form__wrapper c-grid__cell c-grid__cell--span-12">
+    <div class="c-form__section-heading">
+      <h2>
+        Preferences
+      </h2>
+      <p>
+        Tell us a little more about the room you’re listing.
+      </p>
+    </div>
+
+    <div class="c-form__row c-grid__inner">
+      <div class="c-form-field <%= add_error_class(form, :smoking) %> c-grid__cell">
+        <%= render(
+                'partials/form/dropdown-field',
+                {
+                    form:        form,
+                    label:       'Smoking',
+                    help_text:   'Smoking is allowed:',
+                    property:    :smoking,
+                    options:     Room::SMOKING_VAPING_VALUES.map { |val| [t("model.room.smoking_vaping.#{val}"), val] },
+                    prompt:      'Choose One'
+                }
+            ) %>
+      </div>
+
+      <div class="c-form-field <%= add_error_class(form, :vaping) %> c-grid__cell">
+        <%= render(
+                'partials/form/dropdown-field',
+                {
+                    form:        form,
+                    label:       'Vaping',
+                    help_text:   'Vaping is allowed:',
+                    property:    :vaping,
+                    options:     Room::SMOKING_VAPING_VALUES.map { |val| [t("model.room.smoking_vaping.#{val}"), val] },
+                    prompt:      'Choose One'
+                }
+            ) %>
+      </div>
+
+      <div class="c-form-field <%= add_error_class(form, :smoking_types) %> c-grid__cell">
+        <%= render(
+                'partials/form/multiselect',
+                {
+                    form:        form,
+                    label:       'Smoking types',
+                    help_text:   'I am ok with:',
+                    property:    :smoking_types,
+                    options:     Room::SMOKING_TYPE_VALUES.map { |val| [t("model.room.smoking_type.#{val}"), val] }
+                }
+            ) %>
+      </div>
+
+      <div class="c-form-field <%= add_error_class(form, :accept_children) %> c-grid__cell">
+        <%= render(
+                partial: 'partials/form/dropdown-field',
+                locals:  {
+                    form:      form,
+                    label:     'Children*',
+                    help_text: 'Some of the young people we work with are parents part or full time. ' \
+                               'Are you open to renting to a parent?',
+                    property:  :accept_children,
+                    options:   Room::CHILDREN_VALUES.map { |val| [t("model.room.accept_children.#{val}"), val] },
+                    prompt:    'Choose One'
+                }
+            ) %>
+      </div>
+
+      <div class="c-form-field <%= add_error_class(form, :pet_friendly) %> c-grid__cell">
+        <%= render(
+                partial: 'partials/form/multiselect',
+                locals:  {
+                    form:      form,
+                    label:     'Allowed pets:',
+                    property:  :pet_friendly,
+                    options:   Room::PET_FRIENDLY_VALUES.map { |r| [I18n.t("model.room.pet_friendly.#{r}"), r] },
+                }
+            ) %>
+      </div>
+    </div>
+
+    <div class="c-form__row c-grid__inner">
+      <div class="c-form-field <%= add_error_class(form, :rules) %> c-form-field--wide c-grid__cell">
+        <%= render(
+                'partials/form/textarea-field',
+                {
+                    form:     form,
+                    label:    'House Rules',
+                    property: :rules
+                }
+            ) %>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="c-form__actions c-grid__cell c-grid__cell--span-12">
+    <a
+      href="#"
+      title="Go to previous step"
+      class="o-btn o-btn--round o-btn--outline"
+      data-action="click->tabs#previousTab"
+    >
+      Previous
+    </a>
+    <%= form.submit(
+            'Submit',
+            class: 'o-btn o-btn--primary o-btn--round'
+        ) %>
+  </div>
+</div>

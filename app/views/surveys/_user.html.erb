@@ -1,0 +1,37 @@
+<%
+  photo_url = if user.photos.attached?
+                url_for(user.photos.first)
+              else
+                'https://via.placeholder.com/60x60?text=User+Profile+Image'
+              end
+
+  link_to = local_assigns.fetch(:link_to, nil)
+
+  tile_classes = %w[c-user-tile]
+  tile_classes << 'active' if local_assigns.fetch(:active, false)
+
+  tile = capture do %>
+  <div class="c-user-tile__photo">
+    <%= image_tag(photo_url, alt: "#{user.name}'s photo") %>
+  </div>
+  <div class="c-user-tile__info">
+    <div class="c-user-tile__name">
+      <%= user.name %>
+    </div>
+    <div class="c-user-tile__details">
+      <% if user.gender %>
+        <%= I18n.t("model.user.gender.#{user.gender}") %>,
+      <% end %>
+      <%= user.age %>,
+      <%= user.dob %>
+    </div>
+  </div>
+<% end %>
+
+<% if link_to %>
+  <%= link_to(tile, link_to, title: "Approve #{user.name}", class: tile_classes.join(' ')) %>
+<% else %>
+  <div class="<%= tile_classes.join(' ') %>">
+    <%= tile %>
+  </div>
+<% end %>

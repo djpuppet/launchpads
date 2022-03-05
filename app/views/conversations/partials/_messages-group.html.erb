@@ -1,0 +1,38 @@
+<%
+  user = messages.first.user
+  photo_url = if user.photos.attached?
+                url_for(user.photos.first)
+              else
+                asset_pack_path('media/images/icons/user-photo.svg')
+              end
+%>
+<div class="c-messages c-messages--<%= alignment %>">
+  <div class="c-messages__author">
+    <% if user == current_user %>
+      <div class="c-messages__author-photo">
+        <%= image_tag(photo_url, alt: "Your photo") %>
+      </div>
+    <% else %>
+      <a
+        href="<%= profile_path(user) %>"
+        class="c-messages__author-photo"
+        title="Go to <%= user.username %>'s profile"
+      >
+        <%= image_tag(photo_url, alt: "#{user.username}'s photo") %>
+      </a>
+    <% end %>
+  </div>
+  <div class="c-messages__list">
+    <% messages.each do |message| %>
+      <div class="c-messages__item" title="<%= l(message.created_at, format: :inbox) %>">
+        <%= simple_format(message.content) %>
+      </div>
+    <% end %>
+  </div>
+  <div class="c-messages__date">
+    <% if user != current_user %>
+      <strong><%= user.username %></strong> at
+    <% end %>
+    <%= l(messages.last.created_at, format: :inbox) %>
+  </div>
+</div>

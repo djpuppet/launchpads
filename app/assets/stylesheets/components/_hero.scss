@@ -1,0 +1,32 @@
+@use '../tools' as *;
+
+.c-hero {
+  &--with-bg {
+    @include theme-prop(background-color, section-background);
+  }
+}
+
+.c-hero__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.c-hero__icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 50%;
+  @include theme-prop(background-color, secondary);
+
+  &--no-bg {
+    background: none;
+  }
+
+  img {
+    max-width: 100%;
+  }
+}

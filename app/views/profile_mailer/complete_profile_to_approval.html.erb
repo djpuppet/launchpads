@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+  </head>
+  <body>
+    <h1>Hi</h1>
+    <p>New <%= @user.role.capitalize %> has joined the LaunchPads.</p>
+    <p>Please take a look at the profile and make it as approved.</p>
+    <%= link_to 'User', @url %>
+
+    <p>Best regards</p>
+    <p>Launchpads Team</p>
+  </body>
+</html>

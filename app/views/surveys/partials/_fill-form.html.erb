@@ -1,0 +1,37 @@
+<%= form_with(
+        url:    save_surveys_path(@user),
+        model:  @survey,
+        method: :post,
+        class:  'c-grid__inner'
+    ) do |f| %>
+  <%= f.hidden_field(:step, value: 'initial') %>
+
+  <div class="c-grid__cell c-grid__cell--span-12 c-initial-survey__hero">
+    <h1 class="c-initial-survey__heading">
+      Launchpads Waiting List
+    </h1>
+    <p class="c-initial-survey__subheading">
+      Once approved, youth from this list will gain full access to the Launchpads App
+    </p>
+  </div>
+
+  <div class="c-grid__cell c-grid__cell--span-4 c-initial-survey__user">
+    <%= render 'surveys/user', user: @user, active: true %>
+
+    <a
+      class="o-btn o-btn--primary o-btn--round c-initial-survey__back"
+      href="<%= surveys_path %>"
+      title="Go back to list"
+    >
+      Back
+    </a>
+  </div>
+
+  <div class="c-grid__cell c-initial-survey__form">
+    <%= render 'surveys/partials/survey-initial', form: f %>
+  </div>
+
+  <div class="c-grid__cell c-grid__cell--span-12 c-initial-survey__submit">
+    <%= f.submit('Submit', class: 'o-btn o-btn--primary o-btn--round') %>
+  </div>
+<% end %>

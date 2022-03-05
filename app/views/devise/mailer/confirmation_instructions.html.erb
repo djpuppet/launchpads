@@ -1,0 +1,8 @@
+<p>
+  Thank you for your interest in Launchpads.
+</p>
+<%= link_to 'Verify your email address by clicking this link.', confirmation_url(confirmation_token: @token) %>
+<p>
+  We're looking forward to welcoming you to the Launchpads community!
+</p>
+<%= render 'partials/not-reply-message-mailer' %>

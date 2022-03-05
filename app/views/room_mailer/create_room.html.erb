@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+  </head>
+  <body>
+    <p>
+      Hi <%= @room.user.first_name %>,
+    </p>
+    <p>
+      Thanks for creating a listing on Launchpads.
+      Your participation will make a huge difference to youth who are transitioning from foster care to independence.
+      <%= link_to 'You can check out your listing here', room_url(@room) %>
+    </p>
+    <p>
+      Thank you so much!
+      <br>The Launchpads Team
+    </p>
+    <%= render 'partials/not-reply-message-mailer' %>
+  </body>
+</html>

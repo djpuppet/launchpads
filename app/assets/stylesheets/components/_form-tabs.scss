@@ -1,0 +1,122 @@
+@use '../tools' as *;
+
+$circle-size: 50px;
+
+.c-form-tabs {
+  //
+}
+
+.c-form-tabs__wrapper {
+  //
+}
+
+.c-form-tabs__list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: #{$circle-size / 2};
+    right: 0;
+    left: 0;
+    height: 3px;
+    @include theme-prop(background-color, disabled);
+    z-index: -1;
+  }
+
+  &--single {
+    justify-content: center;
+  }
+
+  @include bp-min(tablet) {
+    justify-content: space-around;
+  }
+}
+
+.c-form-tabs__tab {
+  a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    font: {
+      size: 20px;
+      weight: 300;
+    }
+    line-height: 40px;
+    @include theme-prop(color, disabled);
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  &.active {
+    position: relative;
+
+    a {
+      font-weight: 600;
+      @include theme-prop(color, primary);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: #{$circle-size / 2};
+      left: -100vw;
+      right: 50%;
+      height: 3px;
+      @include theme-prop(background-color, primary);
+      z-index: -1;
+    }
+  }
+}
+
+.c-form-tabs__circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: #{$circle-size - 2px};
+  height: #{$circle-size - 2px};
+  border: 2px solid;
+  border-radius: 50%;
+  background-color: white;
+  @include theme-prop(border-color, disabled);
+
+  .active & {
+    @include theme-prop(border-color, primary);
+    @include theme-prop(background-color, primary);
+  }
+}
+
+.c-form-tabs__icon {
+  display: block;
+
+  &--active {
+    display: none;
+  }
+
+  .active & {
+    display: none;
+
+    &--active {
+      display: block;
+    }
+  }
+}
+
+.c-form-tabs__label {
+  display: none;
+
+  @include bp-min(tablet) {
+    display: block;
+    margin-top: 5px;
+  }
+}

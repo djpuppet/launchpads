@@ -1,0 +1,14 @@
+<div class="c-hero <%= 'c-hero--with-bg' if local_assigns.fetch(:background, false) %>">
+  <div class="c-grid">
+    <div class="c-grid__inner">
+      <div class="c-hero__wrapper c-grid__cell c-grid__cell--span-12">
+        <div class="c-hero__icon <%= 'c-hero__icon--no-bg' if local_assigns.fetch(:icon_transparent, false) %>">
+          <%= image_pack_tag(local_assigns[:icon_path], alt: local_assigns[:title]) %>
+        </div>
+        <h1 class="c-hero__heading">
+          <%= local_assigns[:title] %>
+        </h1>
+      </div>
+    </div>
+  </div>
+</div>

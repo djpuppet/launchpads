@@ -1,0 +1,45 @@
+<%= render(
+        'partials/modal',
+        open:        true,
+        primary:     true,
+        passive:     true,
+        labelledby:  'form-sent-heading',
+        describedby: 'form-sent-description'
+    ) do %>
+  <div class="c-form-completed">
+    <div class="c-form-completed__icon">
+      <%= image_pack_tag('media/images/icons/complete-inverted-icon.svg') %>
+    </div>
+    <h1 class="c-form-completed__heading" id="form-sent-heading">
+      Form sent!
+    </h1>
+    <p class="c-form-completed__paragraph" id="form-sent-description">
+      <% if @user.role_previously_changed? %>
+        <%= I18n.t("profile.confirm_profile_message.#{@user.role}") %>
+      <% else %>
+        <%= I18n.t('profile.already_confirmed_message') %>
+      <% end %>
+    </p>
+    <div class="c-form-completed__button">
+      <% if @user.host? %>
+        <% if @user.role_previously_changed? %>
+          <a href="<%= new_room_path %>" title="Add room" class="o-btn o-btn--round">
+            Add room
+          </a>
+        <% else %>
+          <a href="<%= profile_preview_path(@user) %>" title="Preview profile" class="o-btn o-btn--round">
+            Preview profile
+          </a>
+        <% end %>
+      <% else %>
+        <a
+          href="<%= root_path %>"
+          title="Browse rooms"
+          class="o-btn o-btn--round"
+        >
+          Browse rooms
+        </a>
+      <% end %>
+    </div>
+  </div>
+<% end %>

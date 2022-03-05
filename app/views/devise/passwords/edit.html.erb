@@ -1,0 +1,68 @@
+<div class="c-profile-edit c-grid">
+  <%= render(
+          'partials/hero',
+          {
+              icon_path: 'media/images/icons/profile-edit-icon.svg',
+              title:     'Password reset',
+          }
+      ) %>
+</div>
+
+<%= form_with(
+        model:  resource,
+        as:     resource_name,
+        url:    password_path,
+        method: :put,
+        local:  true,
+    ) do |f| %>
+  <div class="c-form c-grid__inner">
+    <div class="c-form__wrapper c-grid__cell c-grid__cell--span-12">
+      <%= f.hidden_field :reset_password_token %>
+
+      <div class="c-form__row c-grid__inner">
+        <div class="c-form-field c-form-field--wide <%= add_error_class(f, :role) %>">
+          <%= render(
+                  partial: 'partials/form/text-field',
+                  locals:  {
+                      form:          f,
+                      property:      :password,
+                      label:         'New password*',
+                      help_text:     "(#{@minimum_password_length} characters minimum)",
+                      field_options: {
+                          autocomplete: 'new-password',
+                          type:         'password',
+                          autofocus:    true,
+                      }
+                  }
+              ) %>
+        </div>
+
+        <div class="c-form-field c-form-field--wide <%= add_error_class(f, :role) %>">
+          <%= render(
+                  partial: 'partials/form/text-field',
+                  locals:  {
+                      form:          f,
+                      property:      :password_confirmation,
+                      label:         'Confirm new password*',
+                      field_options: {
+                          autocomplete: 'new-password',
+                          type:         'password',
+                      }
+                  }
+              ) %>
+        </div>
+      </div>
+    </div>
+
+    <div class="c-form__actions c-grid__cell c-grid__cell--span-12">
+      <%= f.submit(
+              'Change password',
+              class:         'o-btn o-btn--primary o-btn--round'
+          ) %>
+    </div>
+
+    <div class="c-grid__cell c-grid__cell--span-12">
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+<% end %>

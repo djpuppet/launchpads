@@ -1,0 +1,89 @@
+<%
+  message = conversation.messages.last
+  users = conversation.users.reject { |u| u == current_user }
+  user = message ? message.user : users.first
+  photo_url = if user.photos.attached?
+                url_for(user.photos.first)
+              else
+                asset_pack_path('media/images/icons/user-photo.svg')
+              end
+%>
+
+<div class="
+  c-grid__cell
+  c-grid__cell--span-4
+  c-conversation-tile
+  <%= 'unread' unless conversation.read_by?(current_user) %>
+">
+  <div class="c-conversation-tile__wrapper">
+    <a
+      class="c-conversation-tile__link <%= 'unread' unless conversation.read_by?(current_user) %>"
+      href="<%= conversation_path(conversation) %>"
+      title="Conversation with <%= users.map(&:username).join(', ') %>"
+    >
+      <div class="c-conversation-tile__photo">
+        <%= image_tag(photo_url, alt: "#{user.username}'s photo") %>
+      </div>
+      <div class="c-conversation-tile__message">
+        <div class="c-conversation-tile__participants">
+          <%= users.map(&:username).join(', ') %>
+        </div>
+        <div class="c-conversation-tile__content">
+          <% if message.present? %>
+            <%= message.content.truncate(35, separator: ' ') %>
+          <% else %>
+            No messages available yet.
+          <% end %>
+        </div>
+        <div class="c-conversation-tile__time">
+          <%= time_ago_in_words(message&.created_at || conversation.updated_at) %> ago
+        </div>
+      </div>
+    </a>
+    <% if conversation.ignored_by?(current_user) %>
+      <div
+        class="c-conversation-tile__ignore"
+        data-controller="tooltip"
+      >
+        <%= link_to(
+                unignore_conversation_path(conversation),
+                title:         'Unmute this conversation',
+                class:         'c-conversation-tile__ignore-icon',
+                'data-action': 'mouseover->tooltip#show mouseout->tooltip#hide click->tooltip#continue',
+                method:        :post
+            ) do %>
+          <%= image_pack_tag('media/images/icons/ignore-icon--active.svg', alt: 'Conversation is muted') %>
+        <% end %>
+        <div class="c-conversation-tile__tooltip o-tooltip hidden" data-target="tooltip.bubble">
+          <div class="o-tooltip__arrow"></div>
+          <p>
+            If you unmute this conversation, you will start receiving emails to notify you when you receive a new
+            message related to this conversation chain.
+          </p>
+        </div>
+      </div>
+    <% else %>
+      <div
+        class="c-conversation-tile__ignore"
+        data-controller="tooltip"
+      >
+        <%= link_to(
+                ignore_conversation_path(conversation),
+                title:         'Mute this conversation',
+                class:         'c-conversation-tile__ignore-icon',
+                'data-action': 'mouseover->tooltip#show mouseout->tooltip#hide click->tooltip#continue',
+                method:        :post
+            ) do %>
+          <%= image_pack_tag('media/images/icons/ignore-icon.svg', alt: 'Conversation is not muted') %>
+        <% end %>
+        <div class="c-conversation-tile__tooltip o-tooltip hidden" data-target="tooltip.bubble">
+          <div class="o-tooltip__arrow"></div>
+          <p>
+            If you mute this conversation, you will no longer receive emails to notify you when you receive a new
+            message related to this conversation chain.
+          </p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

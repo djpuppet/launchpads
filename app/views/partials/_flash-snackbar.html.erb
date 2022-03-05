@@ -1,0 +1,33 @@
+<%
+  if local_assigns[:message].is_a?(Hash)
+    message = local_assigns[:message]
+  else
+    message = { 'message' => local_assigns[:message] }
+  end
+%>
+
+<div class="c-snackbar" data-controller="snackbar">
+  <a
+    href="#"
+    class="c-snackbar__close"
+    data-action="snackbar#close"
+  >
+    <%= image_pack_tag('media/images/icons/close-icon.svg') %>
+  </a>
+
+  <% if message.key?('icon') %>
+    <div class="c-snackbar__icon">
+      <%= image_pack_tag(message['icon']) %>
+    </div>
+  <% end %>
+  <div class="c-snackbar__content">
+    <% if message.key?('heading') %>
+      <div class="c-snackbar__heading">
+        <%= message['heading'] %>
+      </div>
+    <% end %>
+    <div class="c-snackbar__message">
+      <%= sanitize(message['message'].is_a?(Array) ? message['message'].join('. ') : message['message']) %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<div class="c-grid c-my-listings">
+  <div class="c-grid__inner">
+    <div class="c-my-listings__wrapper c-grid__cell c-grid__cell--span-12">
+      <h3 class="c-my-listings__heading">Your Listings</h3>
+      <% if @rooms.empty? %>
+        <div class="c-my-listings__icon">
+          <%= image_pack_tag('media/images/icons/no-listings-icon.svg', alt: 'No listings available') %>
+        </div>
+        <p class="c-my-listings__subheading">Add your listing now to help a youth on their way to independence.</p>
+      <% end %>
+      <div class="c-my-listings__add-new">
+        <a
+          href="<%= new_room_path %>"
+          title="Add new listing"
+          class="o-btn o-btn--round o-btn--primary"
+        >
+          + Add New Listing
+        </a>
+      </div>
+    </div>
+
+    <% @rooms.each do |room| %>
+      <div class="c-my-listings__item c-grid__cell c-grid__cell--span-4">
+        <%= render 'rooms/room', room: room %>
+        <div class="c-my-listings__actions">
+          <%= link_to(
+                  room.hidden? ? unhide_room_path(room) : hide_room_path(room),
+                  class:  'c-my-listings__action-item c-my-listings__action-item--hide',
+                  title:  "#{room.hidden? ? 'Show' : 'Hide'} room #{room.title} on Browse Listings page",
+                  method: :post
+              ) do %>
+            <% if room.hidden? %>
+              <%= image_pack_tag('media/images/icons/show-icon.svg', alt: 'Show') %> Show
+            <% else %>
+              <%= image_pack_tag('media/images/icons/hide-icon.svg', alt: 'Hide') %> Hide
+            <% end %>
+          <% end %>
+          <a
+            href="<%= edit_room_path(room) %>"
+            class="c-my-listings__action-item c-my-listings__action-item--edit"
+            title="Edit room <%= room.title %>"
+          >
+            <%= image_pack_tag('media/images/icons/pencil-icon.svg', alt: 'Edit') %> Edit
+          </a>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

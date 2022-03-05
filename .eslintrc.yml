@@ -1,0 +1,21 @@
+env:
+  browser: true
+  es6: true
+extends:
+  - 'airbnb-base'
+  - 'plugin:prettier/recommended'
+parser: 'babel-eslint'
+parserOptions:
+  ecmaVersion: 2018
+  sourceType: module
+plugins:
+  - prettier
+settings:
+  "import/resolver":
+    node:
+      paths:
+        - "app/assets"
+        - "app/assets/javascripts"
+    webpack: {}
+rules:
+  class-methods-use-this: off

@@ -1,0 +1,5 @@
+@use '../tools' as *;
+
+.turbolinks-progress-bar {
+  @include theme-prop(background-color, primary);
+}

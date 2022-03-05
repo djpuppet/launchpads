@@ -1,0 +1,20 @@
+<% if @recently_added.any? %>
+  <div class="c-hero c-hero--with-bg">
+    <div class="c-grid">
+      <div class="c-grid__inner">
+        <div class="c-hero__wrapper c-grid__cell c-grid__cell--span-12">
+          <h3 class="c-homepage__hero-heading">Recently Added to Launchpads</h3>
+        </div>
+        <% @recently_added.each do |room| %>
+          <div class="c-grid__cell c-grid__cell--span-4">
+            <%= render 'rooms/room', room: room %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<div class="c-homepage c-grid" data-controller="filters">
+  <%= render 'partials/rooms-listing' %>
+</div>

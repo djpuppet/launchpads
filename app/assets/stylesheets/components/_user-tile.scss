@@ -1,0 +1,79 @@
+@use '../tools' as *;
+
+.c-user-tile {
+  @include theme-prop(--border-color, disabled);
+
+  padding: 20px 25px;
+
+  display: flex;
+  flex-flow: row nowrap;
+
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  text-decoration: none;
+
+  &:hover,
+  &.active {
+    @include theme-prop(--border-color, primary);
+    @include theme-prop(--box-shadow, shadow-medium);
+    text-decoration: none;
+  }
+
+  --photo-size: 70px;
+
+  @include bp-each(tablet desktop) using ($size) {
+    padding: 15px 10px;
+    --photo-size: 50px;
+  }
+}
+
+.c-user-tile__photo {
+  margin-right: 20px;
+  width: var(--photo-size, 70px);
+  height: var(--photo-size, 70px);
+  flex: 0 0 var(--photo-size, 70px);
+
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  box-shadow: var(--box-shadow, none);
+  overflow: hidden;
+
+  img {
+    max-width: 100%;
+
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+.c-user-tile__info {
+  max-width: calc(100% - calc(var(--photo-size, 70px) + 20px));
+
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-evenly;
+}
+
+.c-user-tile__name {
+  max-width: 100%;
+
+  font-weight: normal;
+  font-size: 22px;
+  line-height: 28px;
+  @include theme-prop(color, primary);
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @include bp-each(tablet desktop) using ($size) {
+    font-size: 18px;
+  }
+}
+
+.c-user-tile__details {
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 21px;
+  @include theme-prop(color, secondary);
+}

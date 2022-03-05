@@ -1,0 +1,6 @@
+{
+  const modal = document.createElement('div');
+  modal.innerHTML = "<%= escape_javascript(render('surveys/partials/success-modal').strip.html_safe) %>";
+
+  document.body.appendChild(modal.firstChild);
+}

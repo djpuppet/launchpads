@@ -1,0 +1,119 @@
+<div
+  class="c-rooms-list__filters c-grid__inner"
+  id="rooms-filters"
+>
+  <div class="c-rooms-list__filters-wrapper c-grid__cell c-grid__cell--span-12">
+    <h2 class="c-rooms-list__heading">
+      All rooms
+    </h2>
+    &#x2B0D;
+    <a
+      href="#"
+      title="Toggle available filters"
+      class="c-rooms-list__filters-link"
+      data-action="filters#toggleFilters"
+    >
+      Filters
+    </a>
+    <div
+      class="c-rooms-list__filters-list <%='hidden' if @filters.defaults_used && !current_user&.youth? %>"
+      data-target="filters.list"
+      data-action="change->filters#change"
+    >
+
+      <%= form_with(
+              url:    rooms_path,
+              model:  @filters,
+              method: :get,
+              html:   {
+                  class:         'c-list-filters',
+                  'data-target': 'filters.form'
+              }
+          ) do |form| %>
+        <div class="c-list-filters__title">
+          <span>Filter by:</span>
+          <a
+            href="#"
+            data-target="filters.reset"
+            data-action="filters#reset"
+            title="Restore initial filters values"
+          >
+            Reset filters
+          </a>
+        </div>
+        <div class="c-list-filters__filter">
+          <%= render(
+                  'partials/form/range-field',
+                  form:          form,
+                  label:         'Max Price',
+                  property:      :max_price,
+                  point_labels:  %w[$0 $1500],
+                  value_label:   { label: '$<span></span>' },
+                  field_options: {
+                      min:                  0,
+                      max:                  1500,
+                      step:                 50,
+                      'data-initial-value': 1500
+                  },
+              ) %>
+        </div>
+        <div class="c-list-filters__filter">
+          <%= render(
+                  'partials/form/checkboxes',
+                  {
+                      form:       form,
+                      label:      'Preferences',
+                      checkboxes: [
+                                      {
+                                          label:    'Child friendly',
+                                          property: :child_friendly,
+                                          options:  { 'data-initial-value': '0' }
+                                      },
+                                      {
+                                          label:    'Pet friendly',
+                                          property: :pet_friendly,
+                                          options:  { 'data-initial-value': '0' }
+                                      }
+                                  ]
+                  }
+              ) %>
+        </div>
+        <div class="c-list-filters__filter">
+          <%= render(
+                  partial: 'partials/form/range-field',
+                  locals:  {
+                      form:          form,
+                      label:         'Duration of Stay',
+                      property:      :duration_of_stay,
+                      field_options: {
+                          min:                  1,
+                          max:                  12,
+                          step:                 1,
+                          'data-initial-value': 1
+                      },
+                      point_labels:  ['1 month', '1+ Year'],
+                      value_label:   {
+                          label:  '<span></span> month',
+                          plural: '<span></span> months',
+                      }
+                  }
+              ) %>
+        </div>
+
+        <div class="c-list-filters__filter">
+          <%= render(
+                  partial: 'partials/form/dropdown-field',
+                  locals:  {
+                      form:     form,
+                      label:    'City',
+                      property: :cities,
+                      multiple: true,
+                      options:  Room::CITY_VALUES.map { |p| [I18n.t("model.room.city.#{p}"), p] },
+                      prompt:   'All'
+                  }
+              ) %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<%= form_with(
+        url:    profile_type_path,
+        method: :post,
+        local: true,
+        class:  'c-form c-grid__inner'
+    ) do |form| %>
+  <div class="c-form__wrapper c-grid__cell c-grid__cell--span-12" data-target="tabs.tab">
+    <div class="c-form__section-heading">
+      <h2>
+        Account Info
+      </h2>
+      <p>
+        Select your user type
+      </p>
+    </div>
+
+    <div class="c-form__row c-grid__inner">
+      <div class="c-form-field c-grid__cell">
+        <%= render(
+                partial: 'partials/form/dropdown-field',
+                locals:  {
+                    form:     form,
+                    label:    'User Type*',
+                    property: :type,
+                    value:    current_user.role,
+                    options:  User.humanized_profiles,
+                    prompt:   'Select one'
+                }
+            ) %>
+      </div>
+    </div>
+  </div>
+  <div class="c-form__actions c-grid__cell c-grid__cell--span-12">
+    <%= form.submit('Next', class: 'o-btn o-btn--primary o-btn--round') %>
+  </div>
+<% end %>

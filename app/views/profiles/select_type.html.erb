@@ -1,0 +1,34 @@
+<%
+  profile_tabs = [
+      {
+          icon:   'account-info',
+          label:  'Account Info',
+          active: true,
+          anchor: 'account-info',
+      },
+      {
+          icon:   'personal-info',
+          label:  'Personal Info',
+          anchor: 'personal-info',
+      },
+      {
+          icon:   'preferences',
+          label:  'Preferences',
+          anchor: 'preferences',
+      },
+  ]
+%>
+
+<%= render(
+        'partials/hero',
+        {
+            icon_path: 'media/images/icons/profile-edit-icon.svg',
+            title: 'My Profile',
+        }
+    )%>
+
+<div class="c-profile-edit c-grid">
+  <%= render 'partials/form/tabs', profile_tabs: profile_tabs %>
+  <%= render 'profiles/partials/account-type' %>
+</div>
+

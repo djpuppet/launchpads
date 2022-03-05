@@ -1,0 +1,80 @@
+<div class="c-form c-grid__inner c-tab hidden" id="personal-info" data-target="tabs.tab">
+  <div class="c-form__wrapper c-grid__cell c-grid__cell--span-12">
+    <div class="c-form__section-heading">
+      <h2>
+        Personal Info
+      </h2>
+      <p>
+        Tell us a little more about yourself. All of this information will be available to prospective renters in your
+        public profile.
+      </p>
+    </div>
+
+    <div class="c-form__row c-grid__inner">
+      <div class="c-form-field <%= add_error_class(form, :photos) %> c-form-field--wide c-grid__cell">
+        <%= render(
+                partial: 'partials/form/photos-field',
+                locals:  {
+                    form:      form,
+                    label:     'Photos',
+                    help_text: 'Upload photos of yourself to add to your profile',
+                    property:  :photos,
+                }
+            ) %>
+      </div>
+    </div>
+
+    <div class="c-form__row c-grid__inner">
+      <div class="c-form-field <%= add_error_class(form, :about) %> c-form-field--wide c-grid__cell">
+        <%= render(
+                'partials/form/textarea-field',
+                {
+                    form:     form,
+                    label:    'About Me*',
+                    property: :about,
+                }
+            ) %>
+      </div>
+
+      <div class="c-form-field <%= add_error_class(form, :language) %> c-form-field--wide c-grid__cell">
+        <%= render(
+                'partials/form/text-field',
+                {
+                    form:          form,
+                    label:         'Languages spoken',
+                    property:      :language,
+                    plain:         true,
+                    field_options: { placeholder: 'Do you speak any languages besides English?' }
+                }
+            ) %>
+      </div>
+
+      <div class="c-form-field <%= add_error_class(form, :lgbt_friendly) %> c-grid__cell">
+        <%= render(
+                partial: 'partials/form/dropdown-field',
+                locals:  {
+                    form:     form,
+                    label:    'Do you consider yourself a part of the LGBTQ+ community or an ally to the LGBTQ+ community?*',
+                    property: :lgbt_friendly,
+                    options:  User::LGBT_FRIENDLY_VALUES.map { |val| [I18n.t("model.user.lgbt_friendly.#{val}"), val] },
+                    prompt:   'Choose One'
+                }
+            ) %>
+      </div>
+    </div>
+  </div>
+  <div class="c-form__actions c-grid__cell c-grid__cell--span-12">
+    <a
+      href="<%= profile_type_path %>"
+      title="Go to previous step"
+      class="o-btn o-btn--round o-btn--outline"
+      data-action="click->tabs#previousTab"
+    >
+      Previous
+    </a>
+    <%= form.submit(
+            'Submit',
+            class: 'o-btn o-btn--primary o-btn--round',
+        ) %>
+  </div>
+</div> <!-- END c-tab 1 -->

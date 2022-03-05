@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+  </head>
+  <body>
+    <p>
+      Another user has sent you a message on Launchpads!
+      <%= link_to 'Log in to read what they said.', conversation_url(@conversation) %>
+    </p>
+    <%= render 'partials/not-reply-message-mailer' %>
+  </body>
+</html>

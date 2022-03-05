@@ -1,0 +1,227 @@
+@use '../tools' as *;
+@use '../utilities/vh' as *;
+
+.c-conversation {
+  height: calc(#{vh(100)} - 40px);
+
+  @include bp-min(desktop) {
+    height: calc(#{vh(100)} - 85px);
+  }
+}
+
+.c-conversation__wrapper {
+  grid-template-rows: auto 1fr;
+
+  padding-top: 0;
+  overflow-y: auto;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  scroll-snap-type: y proximity;
+
+  @include bp-each using($size) {
+    // subtract message input height so it's always at the bottom
+    height: calc(100% - var(--input-height, 20px) - 20px - #{grid-gutter($size) * 3});
+  }
+}
+
+.c-conversation__agreement {
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.c-conversation__heading {
+  position: sticky;
+  top: -1px;
+
+  max-height: 80px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+
+  border-bottom: 1px solid;
+  @include theme-prop(border-color, primary);
+  background-color: white;
+}
+
+.c-conversation__back {
+  .o-btn {
+    padding-right: 20px;
+    padding-left: 20px;
+    width: auto;
+    min-width: auto;
+  }
+}
+
+.c-conversation__users {
+  grid-row-start: 1;
+  grid-row-end: 2;
+  grid-column-start: 1;
+  grid-column-end: 2;
+
+  padding: 20px;
+
+  font: {
+    size: 25px;
+    weight: 600;
+  }
+  line-height: 40px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  @include theme-prop(color, secondary);
+}
+
+.c-conversation__user {
+  padding: 20px;
+
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+
+  @include theme-prop(color, secondary);
+}
+
+.c-conversation__user-photo {
+  margin-right: 30px;
+
+  width: 40px;
+  height: 40px;
+
+  img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+  }
+}
+
+.c-conversation__user-name {
+  font: {
+    size: 25px;
+    weight: 600;
+  }
+  line-height: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.c-conversation__date {
+  margin: 40px 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  span {
+    display: block;
+    flex: 1 0 auto;
+
+    font: {
+      size: 14px;
+      weight: 300;
+    }
+    text: {
+      transform: uppercase;
+      align: center;
+    }
+    @include theme-prop(color, disabled);
+  }
+
+  &::before,
+  &::after {
+    content: '';
+    display: block;
+    flex: 1 1;
+    height: 1px;
+    @include theme-prop(background-color, disabled);
+  }
+}
+
+.c-conversation__form {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+}
+
+.c-conversation__form-input {
+  flex: 1;
+  padding: 10px 0 10px 10px;
+
+  line-height: 0;
+  border-radius: 20px 0 0 20px;
+  @include theme-prop(background-color, message-input-bg);
+
+  textarea {
+    box-sizing: border-box;
+
+    min-height: 20px;
+    max-height: 112px;
+    height: var(--input-height, 20px);
+    width: 100%;
+    border: 0;
+    background-color: transparent;
+    resize: none;
+  }
+}
+
+.c-conversation__form-submit {
+  padding-right: 10px;
+  flex: 0;
+
+  border-radius: 0 20px 20px 0;
+  @include theme-prop(background-color, message-input-bg);
+
+  input {
+    height: 100%;
+    appearance: none;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+}
+
+.c-conversation__form-actions {
+  margin-left: 10px;
+  flex: 0;
+  position: relative;
+}
+
+.c-conversation__form-actions-link {
+  padding-right: 20px;
+  padding-left: 20px;
+  min-width: 0;
+  width: auto;
+
+  img {
+    width: 15px;
+  }
+}
+
+.c-conversation__actions-tooltip {
+  position: absolute;
+  top: auto;
+  right: 15px;
+  bottom: calc(100% + 14px);
+  left: auto;
+  min-width: 250px;
+
+  pointer-events: auto;
+}
+
+.c-conversation__actions-links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    padding: 5px 16px;
+
+    font-weight: normal;
+  }
+
+  li:not(:last-child) {
+    border-bottom: 1px solid;
+    @include theme-prop(border-bottom-color, border);
+  }
+}

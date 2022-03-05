@@ -1,0 +1,27 @@
+<%
+  field_classes = %w[c-form-field__input c-form-field__input--currency]
+  field_classes << local_assigns[:options].delete(:container_class) if local_assigns.dig(:options, :container_class)
+%>
+
+<% if local_assigns.key?(:label) %>
+  <%= local_assigns[:form].label(
+          local_assigns[:property],
+          local_assigns[:label],
+          class: 'c-form-field__label'
+      ) %>
+<% end %>
+<% if local_assigns.key?(:help_text) %>
+  <div class="c-form-field__help-text">
+    <%= local_assigns[:help_text] %>
+  </div>
+<% end %>
+<%= render 'partials/form/field-errors', local_assigns %>
+
+<div class="<%= field_classes.join(' ') %>">
+  <%= local_assigns[:form].number_field(
+          local_assigns[:property],
+          {
+              step: 0.01
+          }.merge(local_assigns.fetch(:field_options, {}))
+      ) %>
+</div>

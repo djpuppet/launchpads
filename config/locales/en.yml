@@ -1,0 +1,150 @@
+en:
+  users:
+    create:
+      notice:
+        approved: "You've approved a youth on your case load and they can now access the entire site!"
+        pending : "Thank you for filling out this survey about a youth on your case load. Based on your responses, it appears you believe they may not be ready to live on their own. We'll be reaching out to learn more about weather there is anything we can do to help the youth get ready to rent on their own."
+  time:
+    formats:
+      long: '%B %d, %Y'
+      profile: '%B %Y'
+      inbox: '%B %d, %l:%M %P'
+  activerecord:
+    attributes:
+      user:
+        agreements_acceptance: 'Privacy Policy'
+    errors:
+      models:
+        room:
+          create:
+            user_approved: 'The listing has been successfully created'
+            user_unapproved: 'The listing has been created and will be published when your account is approved'
+          attributes:
+            rent:
+              invalid: 'Rent + Utilities cannot be greater than 1500 combined.'
+            utilities:
+              invalid: 'Rent + Utilities cannot be greater than 1500 combined.'
+        user:
+          attributes:
+            social_worker:
+              not_selected: 'have to be selected'
+  model:
+    user:
+      role:
+        youth: 'I want to rent a room'
+        host: 'I want to list a room'
+        social_worker: 'I am a social worker'
+      benefits:
+        food_vouchers: 'CalFRESH or other food vouchers'
+        cash_aid: 'CalWORKS or other cash aid'
+        medical: 'Medi-Cal'
+        ssi: 'SSI'
+        phi: 'Private health insurance'
+        wic: 'Women, Infant, Children (WIC)'
+        other: 'Other'
+      gender:
+        male: 'Male'
+        female: 'Female'
+        non_binary: 'Non-binary'
+        other: 'Other'
+        not_to_respond: 'Prefer not to respond'
+      transgender:
+        'yes': 'I identify as transgender'
+        'no': 'I do not identify as transgender'
+        not_to_respond: 'Prefer not to respond'
+      pronouns:
+        he: 'He/Him/His'
+        she: 'She/Her/Hers'
+        they: 'They/Them/Theirs'
+        other: 'Other'
+        not_to_respond: 'Prefer not to respond'
+      ethnicity:
+        white: 'White or of European descent'
+        black: 'Black/African-American, African/African-Caribbean descent'
+        asian: 'Asian, Asian Pacific-Islander, Arab-American'
+        latin: 'Latinx, Hispanic, or Chicano'
+        native: 'Native American, American Indian, or Indigenous to North America'
+        other: 'Other'
+        not_to_respond: 'Prefer not to respond'
+      lgbt_friendly:
+        'yes': 'Yes'
+        'no': 'No'
+        unsure: 'Unsure'
+    room:
+      property_type:
+        'single family home': 'Single family home'
+        'multi-unit home/duplex': 'Multi-unit home/Duplex'
+        'apartment': 'Apartment'
+        'in-law unit': 'In-law unit'
+        'other': 'Other'
+      room_type:
+        'single room': 'Single room'
+        'single room with separate entrance': 'Single room with separate entrance'
+        'private': 'Private apartment'
+        'in-law unit': 'In-law unit'
+        'other': 'Other'
+      city:
+        'sf': 'San Francisco'
+        'oakland': 'Oakland'
+        'berkeley': 'Berkeley'
+        'el_cerrito': 'El Cerrito'
+        'richmond': 'Richmond'
+        'alameda': 'Alameda'
+        'emeryville': 'Emeryville'
+        'san_leandro': 'San Leandro'
+        'daly_city': 'Daly City'
+        'south_sf': 'South San Francisco'
+        'millbrae': 'Millbrae'
+        'other': 'Other'
+      amenities:
+        'laundry': 'In house laundry'
+        'close to pt': 'Close to public transportation'
+        'parking available': 'Parking available on-site or street parking typically available'
+        'walkable neighborhood': 'Walkable neighborhood (close to stores/attractions)'
+        'wifi': 'Wifi/Internet access'
+      pet_friendly:
+        cats: 'Cats'
+        dogs: 'Dogs'
+        other: 'Other'
+      smoking_vaping:
+        'inside': 'Inside'
+        'outside': 'Outside'
+        'no': 'Not at all'
+      smoking_type:
+        'thc': 'THC'
+        'tobacco': 'Tobacco'
+      accept_children:
+        'yes': 'Yes'
+        'no': 'No'
+        'possibly': 'Possibly, it depends on the circumstances. I would like to discuss this later in the process.'
+    survey:
+      properties:
+        montlhy_income: 'Estimate of youth’s monthly income aside from SILP payment?'
+        silp_assesment_completed: 'Has your youth completed a SILP readiness assessment which indicated that they were SILP ready?'
+        good_candidate: 'Do you believe the youth to be a good candidate for Launchpads?'
+        can_develop_and_understand_budget: 'Is the youth able to develop and understand a budget?'
+        can_pay_rent: 'Is the youth able to pay rent/bills on time?'
+        can_manage_money: 'Is the youth able to manage money, including avoiding high interest loans, pay-day loans and doing their best to avoid overdrawing bank accounts?'
+        pursuing_goals: 'Is youth pursuing their employment/educational goals?'
+        can_manage_schedule: 'Is young person able to manage their own schedule and get to appointments and obligations on their own?'
+        prepare_own_meals: 'Can youth shop for and prepare their own meals?'
+        cleans_after_self: 'Can youth clean up after themselves and do their own laundry?'
+        can_participate_in_shared_chores: 'Youth can reliably participate in shared household chores as agreed upon by hosts?'
+        is_accessing_services: 'Is youth accessing services when them need them?'
+        can_explain_drinking_strategies: 'Can young person explain strategies for responsible drinking? (e.g. using a designated driver, drinking in moderation, not drinking with strangers, staying hydrated and eating food along with alcohol)?'
+        responsible_substance_use: 'Does young person practice responsible substance use habits?'
+        participate_in_house_agreements: 'Is young person ready to participate in creating and following shared house norms/agreements?'
+        can_manage_anger: 'Is young person able to manage anger when experiencing conflict?'
+        have_support: 'Does the young person have support if they are involved in a conflict that they cannot resolve on their own?'
+        aware_of_community_resources: 'Is youth aware of relevant community resources?'
+  enumerize:
+    user_filters:
+      sort_by:
+        name: 'Sort by: Name'
+        gender: 'Sort by: Gender'
+        age: 'Sort by: Age'
+      status:
+        all: 'Status: All'
+        pending: 'Status: Pending Approval'
+        denied: 'Status: Denied'
+        approved: 'Status: Approved'

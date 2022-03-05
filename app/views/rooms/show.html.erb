@@ -1,0 +1,234 @@
+<%
+  bits = [
+      {
+          icon:    '003-calendar.svg',
+          title:   'Move In',
+          value:   @room.move_in_date.past? ? 'Available Now' : I18n.l(@room.move_in_date, format: :long),
+          visible: true
+      },
+      {
+          icon:    '005-dollar.svg',
+          title:   'Rent',
+          value:   "#{number_to_currency(@room.full_price)}<span> / month</span>".html_safe,
+          visible: true
+      },
+      {
+          icon:    '001-smoking.svg',
+          title:   'Smoking',
+          value:   I18n.t("model.room.smoking_vaping.#{@room.smoking}"),
+          visible: Room::SMOKING_VAPING_VALUES.include?(@room.smoking)
+      },
+      {
+          icon:    '001-smoking.svg',
+          title:   'Vaping',
+          value:   I18n.t("model.room.smoking_vaping.#{@room.vaping}"),
+          visible: Room::SMOKING_VAPING_VALUES.include?(@room.vaping)
+      },
+      {
+          icon:    '001-smoking.svg',
+          title:   'Smoking Types',
+          value:   if @room.smoking_types.any?
+                     @room.smoking_types.map { |smoking_type| I18n.t("model.room.smoking_type.#{smoking_type}") }.join(', ')
+                   else
+                     'None'
+                   end,
+          visible: true
+      },
+      {
+          icon:    '006-clock.svg',
+          title:   'Duration',
+          value:   @room.duration_of_stay.to_i < 12 ? pluralize(@room.duration_of_stay, 'month', 'months') : '1+ Year',
+          visible: true
+      },
+      {
+          icon:    '007-bed.svg',
+          title:   'Property Type',
+          value:   I18n.t("model.room.property_type.#{@room.property_type}"),
+          visible: true
+      },
+      {
+          icon:    '007-bed.svg',
+          title:   'Room Type',
+          value:   I18n.t("model.room.room_type.#{@room.room_type}"),
+          visible: true
+      },
+      {
+          icon:    '004-pawprint.svg',
+          title:   'Allowed Pets',
+          value:   if @room.pet_friendly.any?
+                     @room.pet_friendly.map { |option| I18n.t("model.room.pet_friendly.#{option}") }.join(', ')
+                   else
+                     'None'
+                   end,
+          visible: true
+      },
+      {
+          icon:    '002-pacifier.svg',
+          title:   'Kids',
+          value:   if @room.accept_children?
+                     'Allowed'
+                   else
+                     @room.possibly_accept_children? ? 'Possibly' : 'Not allowed'
+                   end,
+          visible: true
+      },
+      {
+          icon:    '007-bed.svg',
+          title:   'Furnished?',
+          value:   @room.furnished ? 'Yes' : 'No',
+          visible: true
+      },
+  ]
+
+  host_photo = if @room.host.photos.attached?
+                 url_for(@room.host.photos.first)
+               else
+                 asset_pack_path('media/images/icons/user-photo.svg')
+               end
+%>
+
+<div class="c-room-details c-grid" data-controller="carousel">
+  <div class="c-grid__inner c-room-details__inner">
+    <div class="c-grid__cell c-grid__cell--span-12 c-room-details__slider" data-target="carousel.carousel">
+      <a href="#" data-action="carousel#previousSlide" class="previous"></a>
+      <a href="#" data-action="carousel#nextSlide" class="next"></a>
+      <% @room.photos.each do |photo| %>
+        <div
+          class="c-room-details__slide"
+          data-target="carousel.slide"
+        >
+          <img src="<%= url_for(photo) %>" alt="<%= @room.title %>">
+        </div>
+      <% end %>
+    </div>
+
+    <div class="c-grid__cell c-room-details__description">
+      <h5 class="c-room-details__city">
+        <%= @room.city_or_other_city %>
+      </h5>
+      <h1 class="c-room-details__title">
+        <%= @room.title %>
+      </h1>
+      <ul class="c-room-details__bits">
+        <% bits.each do |bit| %>
+          <% next unless bit[:visible] %>
+          <li class="c-room-details__bit">
+            <div class="c-room-details__bit-icon">
+              <%= image_pack_tag("media/images/icons/#{bit[:icon]}", alt: '') %>
+            </div>
+            <div class="c-room-details__bit-title">
+              <%= bit[:title] %>
+            </div>
+            <div class="c-room-details__bit-value">
+              <%= bit[:value] %>
+            </div>
+          </li>
+        <% end %>
+        <% if @room.rules.present? %>
+          <li class="c-room-details__bit">
+            <div class="c-room-details__bit-icon">
+              <%= image_pack_tag("media/images/icons/008-gavel.svg", alt: '') %>
+            </div>
+            <div class="c-room-details__bit-title">
+              Learn More
+            </div>
+            <div class="c-room-details__bit-value">
+              <a
+                href="#house-rules"
+                title="House Rules"
+                data-turbolinks="false"
+              >
+                House Rules
+              </a>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+      <h3 class="c-room-details__about-heading">About the room</h3>
+      <div class="c-room-details__about">
+        <%= simple_format(@room.about) %>
+      </div>
+      <% if @room.amenities.any? %>
+        <h3 class="c-room-details__amenities-heading">Amenities</h3>
+        <ul class="c-room-details__amenities">
+          <% @room.amenities.each do |amenity| %>
+            <li class="c-room-details__amenity">
+              <%= image_pack_tag("media/images/icons/clock-icon.svg", alt: '') %>
+              <%= I18n.t("model.room.amenities.#{amenity}") %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+      <% if @room.other_amenities.present? %>
+        <h3 class="c-room-details__amenities-heading">Other Amenities</h3>
+          <ul class="c-room-details__amenities">
+            <li class="c-room-details__amenity">
+              <%= @room.other_amenities %>
+            </li>
+          </ul>
+      <% end %>
+      <% if !current_user.social_worker? && @room.host != current_user %>
+        <div class="c-room-details__inquiry">
+          <%= link_to('Inquire about this room',
+                      find_or_create_conversations_path(@room.host),
+                      class: "o-btn o-btn--primary o-btn--round") %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="c-grid__cell c-room-details__host">
+      <div class="c-room-details__host-wrapper">
+        <div class="c-room-details__host-photo">
+          <img
+            src="<%= host_photo %>"
+            alt="Host's photo"
+          >
+        </div>
+        <a href="<%= profile_path(@room.host) %>" class="c-room-details__host-name">
+          <%= @room.host.username %>
+        </a>
+        <div class="c-room-details__host-details">
+          <% if @room.host.show_gender %>
+            <%= I18n.t("model.user.gender.#{@room.host.gender}") %>
+          <% end %>
+        </div>
+        <div class="c-room-details__host-about">
+          <%= simple_format(@room.host.about) %>
+        </div>
+        <% if !current_user.social_worker? && @room.host != current_user %>
+          <div class="c-room-details__host-message">
+            <%= link_to('Private Message', find_or_create_conversations_path(@room.host), class: "o-btn o-btn--primary o-btn--round") %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if @room.rules.present? %>
+  <%= render(
+          'partials/modal',
+          name:       'house-rules',
+          show_close: true,
+          passive:    true,
+          labelledby: 'house-rules-modal-heading'
+      ) do %>
+    <div class="c-room-details__modal">
+      <h2 class="c-room-details__modal-heading" id="house-rules-modal-heading">
+        House Rules
+      </h2>
+      <div class="c-room-details__modal-content">
+        <%= simple_format(@room.rules) %>
+      </div>
+      <div class="c-room-details__modal-close">
+        <a
+          href="#"
+          class="o-btn o-btn--round o-btn--primary"
+          data-action="modal#close"
+        >
+          Close
+        </a>
+      </div>
+    </div>
+  <% end %>
+<% end %>

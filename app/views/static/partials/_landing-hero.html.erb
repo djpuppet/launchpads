@@ -1,0 +1,101 @@
+<section class="c-landing-hero">
+  <div class="c-grid">
+    <div class="c-grid__inner c-landing-hero__wrapper">
+      <div class="c-landing-hero__image">
+        <%= image_pack_tag('media/images/landing-hero.svg', alt: 'Sign in to the Launchpads app') %>
+      </div>
+      <%= form_with(
+              model:  User.new,
+              as:     :user,
+              url:    session_path,
+              method: :post,
+              remote: true,
+              html:   {
+                  class:             'c-sign-modal c-landing-hero__form',
+                  'data-controller': 'auth',
+                  'data-action':     'ajax:error->auth#signInError',
+                  'data-type':       :json,
+              }
+          ) do |form| %>
+        <div class="c-sign-modal__icon">
+          <%= image_pack_tag('media/images/icons/complete-icon.svg') %>
+        </div>
+        <h1 class="c-sign-modal__heading" id="sign-in-modal-heading">
+          Log In
+        </h1>
+
+        <div class="c-sign-modal__fields" data-target="auth.formFields">
+          <% if flash.key?(:confirmation_errors) %>
+            <div class="c-sign-modal__errors" data-target="auth.errors">
+              <%= flash[:confirmation_errors].join('<br>'.html_safe) %>
+            </div>
+          <% end %>
+
+          <template data-target="auth.errorsTemplate">
+            <div class="c-sign-modal__errors" data-target="auth.errors"></div>
+          </template>
+
+          <div class="c-sign-modal__input">
+            <%= render(
+                    partial: 'partials/form/text-field',
+                    locals:  {
+                        form:          form,
+                        property:      :email,
+                        plain:         true,
+                        field_options: {
+                            autocomplete: 'email',
+                            placeholder:  'Email*'
+                        }
+                    }
+                ) %>
+          </div>
+
+          <div class="c-sign-modal__input">
+            <%= render(
+                    partial: 'partials/form/text-field',
+                    locals:  {
+                        form:          form,
+                        property:      :password,
+                        plain:         true,
+                        field_options: {
+                            autocomplete: 'current-password',
+                            type:         'password',
+                            placeholder:  'Password*'
+                        }
+                    }
+                ) %>
+          </div>
+
+          <div class="c-sign-modal__submit">
+            <%= form.submit('Submit', class: 'o-btn o-btn--round o-btn--primary') %>
+          </div>
+
+          <div class="c-sign-modal__links">
+            <a
+              href="#forgot-password"
+              title="Forgot your password?"
+              data-turbolinks="false"
+            >
+              Forgot your password?
+            </a><br/>
+            <a
+              href="#account-confirmation"
+              title="Resend account confirmation instructions"
+              data-turbolinks="false"
+            >
+              Didn't receive confirmation instructions?
+            </a><br/>
+            Don't have an account?
+            <a
+              href="#sign-up"
+              title="Sign Up"
+              data-turbolinks="false"
+            >
+              Sign up
+            </a><br/>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>

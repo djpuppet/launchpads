@@ -1,0 +1,101 @@
+@use 'sass:map';
+@use 'sass:meta';
+@use 'sass:list';
+@use '../settings' as *;
+
+@function all-bps() {
+  @return map.keys($grid-columns);
+}
+
+@function bp-next($size) {
+  $previous: null;
+  @each $breakpoint in map.keys($grid-columns) {
+    @if $previous == $size {
+      @return $breakpoint;
+    }
+    $previous: $breakpoint;
+  }
+  @return null;
+}
+
+@function bp-min($size) {
+  @if not map.has-key($grid-columns, $size) {
+    @error 'Invalid style specified! Choose one of #{map.keys($grid-columns)}';
+  }
+
+  @return map.get($breakpoints, $size);
+}
+
+@function bp-max($size) {
+  @if not map.has-key($grid-columns, $size) {
+    @error 'Invalid style specified! Choose one of #{map.keys($grid-columns)}';
+  }
+
+  $next: bp-next($size);
+
+  @if not $next {
+    @return null;
+  }
+
+  @return map.get($breakpoints, $next) - 1px;
+}
+
+@mixin bp($size) {
+  @if not map.has-key($grid-columns, $size) {
+    @error 'Invalid style specified! Choose one of #{map.keys($grid-columns)}';
+  }
+
+  $min: bp-min($size);
+  $max: bp-max($size);
+
+  @if $min == null and $max != null {
+    // Phone
+    @media (max-width: $max) {
+      @content;
+    }
+  }
+  @else if $min != null and $max != null {
+    // Tablet
+    @media (min-width: $min) and (max-width: $max) {
+      @content;
+    }
+  }
+  @else if $min != null and $max == null {
+    // Desktop
+    @media (min-width: $min) {
+      @content;
+    }
+  }
+  @else {
+    // Fallback - no breakpoints defined
+    @content;
+  }
+}
+
+@mixin spacing($edge, $grid-prop, $main-prop) {
+  $prop: ($main-prop);
+  @if $edge != null {
+    @if meta.type-of($edge) == 'list' {
+      $prop: ();
+      @each $val in $edge {
+        $prop: list.append($prop, '#{$main-prop}-#{$val}');
+      }
+    }
+    @else {
+      $prop: ('#{$main-prop}-#{$edge}');
+    }
+  }
+
+  $values: $grid-gutter;
+  @if $grid-prop != 'gutter' {
+    $values: $grid-margin;
+  }
+
+  @each $size, $margin in $values {
+    @include bp($size) {
+      @each $i in $prop {
+        #{$i}: $margin;
+      }
+    }
+  }
+}

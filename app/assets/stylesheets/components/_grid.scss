@@ -1,0 +1,13 @@
+@use '../tools' as *;
+
+.c-grid {
+  @include grid-container();
+}
+
+.c-grid__inner {
+  @include grid-inner();
+}
+
+.c-grid__cell {
+  @include grid-cell();
+}

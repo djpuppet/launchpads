@@ -1,0 +1,47 @@
+@use '../tools' as *;
+@use '../utilities' as *;
+
+.o-checkbox {
+  font: {
+    size: 16px;
+    weight: 300;
+  }
+  line-height: 24px;
+  @include theme-prop(color, primary);
+  user-select: none;
+
+  input {
+    opacity: 0;
+    position: absolute;
+  }
+
+  span {
+    display: block;
+  }
+
+  span::before {
+    content: '';
+    display: inline-block;
+    margin-right: 14px;
+    width: 15px;
+    height: 15px;
+    vertical-align: middle;
+    border: 1px solid;
+    @include theme-prop(color, primary);
+    border-radius: 3px;
+    background-color: white;
+  }
+
+  input:checked + span {
+    &::before {
+      content: url('../images/icons/checkmark.svg');
+      line-height: 15px;
+      text-align: center;
+      @include theme-prop(background-color, primary);
+    }
+  }
+
+  input:focus + span {
+    @include focus-add;
+  }
+}

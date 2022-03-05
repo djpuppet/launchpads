@@ -1,0 +1,91 @@
+@use '../tools' as *;
+
+.c-waiting-list {
+  //
+}
+
+.c-waiting-list__hero {
+  @include bp-each using ($size) {
+    margin-bottom: #{80px - grid-gutter($size) / 2};
+  }
+}
+
+.c-waiting-list__heading {
+  font: {
+    weight: 600;
+    size: 37px;
+  }
+  line-height: 40px;
+  @include theme-prop(color, secondary);
+}
+
+.c-waiting-list__subheading {
+  font: {
+    weight: 300;
+    size: 20px;
+  }
+  line-height: 30px;
+  @include theme-prop(color, secondary);
+}
+
+.c-waiting-list__sort-field {
+  @include bp-each(tablet desktop full) using ($size) {
+    margin-bottom: #{50px - grid-gutter($size) / 2};
+  }
+}
+
+.c-waiting-list__filters {
+  @include bp-each using ($size) {
+    margin-bottom: #{50px - grid-gutter($size) / 2};
+  }
+
+  @include grid-cell-span(phone, 4);
+  @include grid-cell-span(tablet, 8);
+  @include grid-cell-span(desktop, 4);
+  @include grid-cell-span(full, 4);
+
+  display: flex;
+  flex-flow: row nowrap;
+
+  border-bottom: 1px solid;
+  @include theme-prop(border-color, primary);
+}
+
+.c-waiting-list__keyword-field {
+  flex: 1;
+
+  @include bp-only(phone) {
+    padding-top: 25px;
+  }
+
+  .c-form-field__input {
+    border-bottom: 0;
+  }
+}
+
+.c-waiting-list__filter-actions {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+
+  button,
+  a {
+    margin: 0 0 0 10px;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    display: block;
+
+    appearance: none;
+    border: none;
+    background: none;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+  }
+}

@@ -1,0 +1,8 @@
+Dear, <%= @social_worker.first_name %>
+
+<%= @youth.name %>, a youth on your caseload, recently applied for an account on the Launchpads platform.
+We need your help assessing whether they are eligible to use the platform and whether they would be a good candidate for Launchpads.
+<%= link_to "Please log in to answer some questions about #{ @youth.first_name }.", fill_surveys_url(@youth) %>
+
+Thanks for helping us make Launchpads possible,
+The Launchpads Team

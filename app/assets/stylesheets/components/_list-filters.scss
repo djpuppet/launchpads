@@ -1,0 +1,39 @@
+@use '../tools' as *;
+
+.c-list-filters {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  border-bottom: 1px solid;
+  @include theme-prop(border-color, primary-light);
+}
+
+.c-list-filters__title,
+.c-list-filters__filter {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  flex: 1 0 100%;
+
+  @include bp-min(desktop) {
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+  }
+}
+
+.c-list-filters__title {
+  display: flex;
+  border-bottom: 1px solid;
+  @include theme-prop(border-color, primary-light);
+
+  span {
+    flex: 1;
+  }
+}
+
+.c-list-filters__filter {
+  @include bp-min(tablet) {
+    flex-basis: 48%;
+    max-width: 48%;
+  }
+}

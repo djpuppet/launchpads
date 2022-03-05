@@ -1,0 +1,32 @@
+<%
+  profile_tabs = [
+      {
+          icon:   'account-info',
+          label:  'Account Info',
+          active: true,
+          anchor: 'account-info',
+      },
+      {
+          icon:   'personal-info',
+          label:  'Personal Info',
+          anchor: 'personal-info',
+      },
+  ]
+%>
+
+<%= yield(profile_tabs) %>
+
+<%= form_with(
+        model:  @user,
+        url:    edit_profile_path,
+        method: :post,
+        html:   {
+            'data-controller':     'direct-upload',
+            'data-action':         'direct-upload#start validation:complete->direct-upload#updatePreview',
+            'data-target':         'tabs.form',
+            'data-validation-url': validate_profile_url
+        }
+    ) do |form| %>
+  <%= render 'profiles/partials/host/account-info', form: form %>
+  <%= render 'profiles/partials/host/personal-info', form: form %>
+<% end %>

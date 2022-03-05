@@ -1,0 +1,107 @@
+@use '../tools' as *;
+@use '../utilities' as *;
+
+.c-form-dropdown {
+  position: relative;
+  user-select: none;
+
+  select {
+    visibility: hidden;
+    position: absolute;
+  }
+
+  &:focus-within {
+    @include focus-reset;
+  }
+
+  &:focus {
+    @include focus-add;
+  }
+}
+
+.c-form-dropdown__options {
+  display: none;
+  margin: 0;
+  padding: 10px 0;
+  position: absolute;
+  top: calc(100% + 15px);
+  left: 0;
+  right: 0;
+  z-index: 1;
+  background-color: white;
+  border-radius: 5px;
+  @include theme-prop(box-shadow, shadow);
+  list-style: none;
+
+  .c-form-dropdown.open & {
+    display: block;
+    max-height: 440px;
+    overflow-y: auto;
+  }
+}
+
+.c-form-dropdown__prompt,
+.c-form-dropdown__option {
+  padding: 10px 20px;
+  font: {
+    size: 20px;
+    weight: 300;
+  }
+}
+
+.c-form-dropdown__prompt {
+  display: block;
+  cursor: pointer;
+  padding-right: 48px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  line-height: 28px;
+  @include theme-prop(color, text);
+
+  .c-form-dropdown.open & {
+    @include theme-prop(color, primary);
+  }
+
+  &.placeholder {
+    @include theme-prop(color, disabled);
+  }
+}
+
+.c-form-dropdown__option {
+  font: {
+    size: 20px;
+    weight: 300;
+  }
+  line-height: 25px;
+  background-color: white;
+  @include theme-prop(color, text);
+  cursor: pointer;
+  border-bottom: 1px solid;
+  @include theme-prop(border-color, primary-light);
+
+  &.selected,
+  &:hover {
+    color: white;
+    @include theme-prop(background-color, primary);
+  }
+
+  &.selected {
+    position: relative;
+
+    &::after {
+      content: url('../images/icons/checkmark.svg');
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+    }
+  }
+
+  &--prompt {
+    @include theme-prop(color, disabled);
+  }
+}

@@ -1,0 +1,24 @@
+<%
+  profile_tabs = [
+      {
+          icon:   'account-info',
+          label:  'Account Info',
+          active: true,
+          anchor: 'account-info',
+      },
+  ]
+%>
+
+<%= yield(profile_tabs) %>
+
+<%= form_with(
+        model:  @user,
+        url:    edit_profile_path,
+        method: :post,
+        html:   {
+            'data-target':         'tabs.form',
+            'data-validation-url': validate_profile_url
+        }
+    ) do |form| %>
+  <%= render 'profiles/partials/social_worker/account-info', form: form %>
+<% end %>

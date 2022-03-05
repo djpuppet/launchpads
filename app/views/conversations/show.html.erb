@@ -1,0 +1,110 @@
+<% content_for :hide_footer, true %>
+<div class="c-grid c-conversation" data-controller="inbox">
+  <div class="c-grid__inner c-conversation__wrapper" data-target="inbox.messages">
+    <p class="c-grid__cell c-grid__cell--span-12 c-conversation__agreement">
+      I acknowledge that I understand that if I use the messaging feature on the Launchpads platform, I am doing so
+      understanding that in addition to the intended recipient, Launchpads administrators have the ability to view all
+      messages that are exchanged for the purpose of maintaining the safety of the platform. Further, I understand that
+      Launchpads is not assuming the obligation to review and/or remove messages, but may review and remove messages at
+      their discretion.
+    </p>
+    <div class="c-grid__cell c-grid__cell--span-12 c-conversation__heading" data-turbolinks-permanent>
+      <% names = @conversation.users.reject { |u| u == current_user }.map(&:username).join(', ') %>
+      <div class="c-conversation__users" title="<%= names %>">
+        <%= names %>
+      </div>
+      <div class="c-conversation__back">
+        <a class="o-btn o-btn--outline" href="<%= conversations_path %>">
+          Back
+        </a>
+      </div>
+    </div>
+
+    <div class="c-grid__cell c-grid__cell--span-12 c-conversation__messages">
+      <% messages_groups(@conversation.messages).each do |group| %>
+        <% if group.date_changed %>
+          <div class="c-conversation__date">
+            <span><%= l(group.messages.first.created_at, format: :long) %></span>
+          </div>
+        <% end %>
+        <%= render(
+                partial: 'conversations/partials/messages-group',
+                locals:  {
+                    alignment: group.odd? ? 'left' : 'right',
+                    messages:  group.messages
+                }
+            ) %>
+      <% end %>
+    </div>
+
+  </div>
+
+  <div class="c-grid__inner" data-turbolinks-permanent>
+    <div class="c-grid__cell c-grid__cell--span-12">
+      <%= form_with(
+              model: @conversation.messages.build(user: current_user),
+              url:   conversation_messages_path(@conversation),
+              class: 'c-conversation__form',
+              html:  {
+                  'data-target':  'inbox.form',
+                  'data-action':  'inbox#submitMessage',
+                  'autocomplete': 'off'
+              }
+          ) do |f| %>
+        <div class="c-conversation__form-input">
+          <%= f.text_area(
+                  :content,
+                  placeholder:   'Type something...',
+                  'data-target': 'inbox.messageInput',
+                  'data-action': 'input->inbox#messageChange'
+              ) %>
+        </div>
+        <div class="c-conversation__form-submit">
+          <%= f.submit('Send') %>
+        </div>
+        <div class="c-conversation__form-actions">
+          <a
+            href="#"
+            data-action="inbox#showActions"
+            class="o-btn o-btn--primary o-btn--round c-conversation__form-actions-link"
+            title="Show actions"
+            data-turbolinks="false"
+          >
+            <%= image_pack_tag('media/images/icons/menu--white.svg', alt: 'Menu icon') %>
+          </a>
+
+          <div
+            class="c-conversation__actions-tooltip o-tooltip o-tooltip--inverted hidden"
+            data-target="inbox.actions"
+          >
+            <ul class="c-conversation__actions-links">
+              <% if @conversation.includes_youth? && !@conversation.includes_social_worker? %>
+                <li>
+                  <a
+                    href="<%= invite_social_worker_conversation_path(@conversation) %>"
+                    title="Invite social worker to this conversation"
+                    onclick="return confirm('Are you sure? Social worker will see all previous messages.');"
+                  >
+                    Add social worker
+                  </a>
+                </li>
+              <% end %>
+              <li>
+                <a
+                  href="<%= report_conversation_path(@conversation) %>"
+                  title="Report member of this conversation"
+                  data-turbolinks="false"
+                  onclick="return confirm('Are you sure?');"
+                >
+                  Report inappropriate content
+                </a>
+              </li>
+            </ul>
+            <div class="o-tooltip__arrow"></div>
+          </div>
+
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

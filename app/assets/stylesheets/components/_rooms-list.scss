@@ -1,0 +1,41 @@
+@use '../tools' as *;
+
+.c-rooms-list {
+  //
+}
+
+.c-rooms-list__filters {
+  //
+}
+
+.c-rooms-list__filters-wrapper {
+  //
+}
+
+.c-rooms-list__heading {
+  font: {
+    size: 22px;
+    weight: 600;
+  }
+  line-height: 30px;
+}
+
+.c-rooms-list__filters-link {
+  font: {
+    size: 16px;
+    weight: 600;
+  }
+  line-height: 24px;
+}
+
+.c-rooms-list__filters-list {
+  margin-top: 15px;
+
+  &.hidden {
+    display: none;
+  }
+}
+
+.c-rooms-list__collection {
+  //
+}

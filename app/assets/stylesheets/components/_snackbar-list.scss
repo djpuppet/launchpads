@@ -1,0 +1,25 @@
+@use '../tools' as *;
+
+.c-snackbar-list {
+  --position-top: auto;
+  --position-right: #{grid-margin(phone)};
+  --position-bottom: #{grid-margin(phone)};
+  --position-left: #{grid-margin(phone)};
+
+  @include bp-each(tablet desktop full) using($size) {
+    --position-right: auto;
+    --position-bottom: #{grid-margin($size)};
+    --position-left: #{grid-margin($size)};
+
+    max-width: 350px;
+  }
+
+  position: fixed;
+  top: var(--position-top);
+  right: var(--position-right);
+  bottom: var(--position-bottom);
+  left: var(--position-left);
+
+  display: flex;
+  flex-direction: column;
+}

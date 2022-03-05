@@ -1,0 +1,10 @@
+{
+  const form = document.querySelector('#survey_form');
+
+  form.innerHTML = "<%= escape_javascript(render('surveys/partials/details-form').strip.html_safe) %>";
+  const error = form.querySelector('.has-errors');
+
+  if (error) {
+    error.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}

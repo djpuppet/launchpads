@@ -1,0 +1,111 @@
+<% unless content_for?(:hide_footer) %>
+  <footer class="c-footer">
+    <div class="c-grid">
+      <div class="c-grid__inner">
+
+        <div class="c-grid__cell c-footer__credentials">
+          <div class="c-footer__cell-wrapper">
+            <a class="c-footer__credentials-logo" target="_blank" href="https://www.freedom-forward.org/" title="Freedom Forward">
+              <%= image_pack_tag('media/images/ff-logo.svg') %>
+            </a>
+            <div class="c-footer__credentials-info">
+              Launchpads is a project of
+              <a href="https://www.freedom-forward.org/" target="_blank" title="Freedom Forward">Freedom Forward</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="c-grid__cell c-footer__follow">
+          <div class="c-footer__cell-wrapper">
+            <h5 class="c-footer__heading">Follow</h5>
+
+            <div class="c-footer__follow-icons">
+              <a href="https://www.instagram.com/freedomfwd/" title="Instagram" target="_blank">
+                <%= image_pack_tag('media/images/icons/instagram-gray.svg') %>
+              </a>
+              <a href="https://www.facebook.com/FreedomFWD/" title="Facebook" target="_blank">
+                <%= image_pack_tag('media/images/icons/facebook.svg') %>
+              </a>
+              <a href="https://twitter.com/FreedomFWD" title="Twitter" target="_blank">
+                <%= image_pack_tag('media/images/icons/twitter.svg') %>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="c-grid__cell c-footer__about">
+          <div class="c-footer__cell-wrapper">
+            <h5 class="c-footer__heading">About</h5>
+
+            <ul>
+              <li>
+                <a href="https://www.freedom-forward.org/launchpads" target="_blank" title="Launchpads + Freedom Forward">
+                  Launchpads + Freedom Forward
+                </a>
+              </li>
+              <li>
+                <a href="https://www.wearelaunchpads.org/how-it-works" target="_blank" title="How it works">
+                  How it works
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="c-grid__cell c-footer__contact">
+          <div class="c-footer__cell-wrapper">
+            <h5 class="c-footer__heading">Contact</h5>
+
+            <ul>
+              <li>
+                <a href="#faq" title="FAQ" data-turbolinks="false">
+                  FAQ
+                </a>
+              </li>
+              <li>
+                <a href="https://www.wearelaunchpads.org/contact" target="_blank" title="Get in touch">
+                  Get in touch
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+<% end %>
+
+<% unless current_user %>
+  <%= render('partials/modal', name: 'sign-up', show_close: true, labelledby: 'sign-up-modal-heading') do %>
+    <%= render 'partials/sign-up-modal' %>
+  <% end %>
+  <%= render(
+          'partials/modal',
+          name:       'account-confirmation',
+          show_close: true,
+          labelledby: 'account-confirmation-modal-heading'
+      ) do %>
+    <%= render 'partials/account-confirmation-modal' %>
+  <% end %>
+  <%= render(
+          'partials/modal',
+          name:       'forgot-password',
+          show_close: true,
+          labelledby: 'forgot-password-modal-heading'
+      ) do %>
+    <%= render 'partials/forgot-password-modal' %>
+  <% end %>
+<% end %>
+
+<%= render('partials/modal', name: 'faq', passive: true, show_close: true, labelledby: 'faq-modal-heading') do %>
+  <%= render 'static/partials/faq-modal' %>
+<% end %>
+
+<% if flash.any? %>
+  <div class="c-snackbar-list">
+    <% flash.each do |_type, message| %>
+      <%= render 'partials/flash-snackbar', message: message %>
+    <% end %>
+  </div>
+<% end %>

@@ -1,0 +1,14 @@
+<div
+  class="c-form-field c-form-field--wide <%= add_error_class(form, property) %> c-grid__cell"
+>
+  <%= render(
+          'partials/form/dropdown-field',
+          {
+              form:     form,
+              label:    question,
+              property: property,
+              prompt:   'Pick one',
+              options:  Survey::DETAILS_VALUES.map { |val| [val, val] }
+          }
+      ) %>
+</div>

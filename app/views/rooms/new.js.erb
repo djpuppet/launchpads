@@ -1,0 +1,10 @@
+{
+  const form = document.createElement('div');
+  form.innerHTML = "<%= escape_javascript(render(template: 'rooms/new.html')) %>";
+  const tabs = document.querySelectorAll('[data-target="tabs.tab"]');
+
+  const currentTab = tabs[tabs.length - 1];
+  const newCurrentTab = form.querySelector(`#${currentTab.id}`);
+
+  currentTab.innerHTML = newCurrentTab.innerHTML;
+}

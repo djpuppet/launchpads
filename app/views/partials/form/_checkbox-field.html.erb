@@ -1,0 +1,6 @@
+<div class="c-form-field__input c-form-field__input--checkbox">
+  <%= local_assigns[:form].label(local_assigns[:property], class: 'o-checkbox') do %>
+    <%= local_assigns[:form].check_box(local_assigns[:property], local_assigns.fetch(:field_options, {})) %>
+    <span><%= local_assigns[:label] %></span>
+  <% end %>
+</div>

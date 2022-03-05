@@ -1,0 +1,110 @@
+@use '../tools' as *;
+
+.c-my-listings {
+  //
+}
+
+.c-my-listings__wrapper {
+  margin-bottom: 70px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.c-my-listings__heading {
+  margin: 120px 0 75px;
+
+  font: {
+    size: 30px;
+    weight: 600;
+  }
+  line-height: 40px;
+  text-align: center;
+}
+
+.c-my-listings__icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 50%;
+  @include theme-prop(background-color, listings-hero-icon-bg);
+
+  img {
+    max-width: 100%;
+  }
+}
+
+.c-my-listings__subheading {
+  font: {
+    size: 20px;
+    weight: 300;
+  }
+  line-height: 30px;
+  text-align: center;
+
+  @include theme-prop(color, disabled);
+}
+
+.c-my-listings__item {
+  position: relative;
+
+  &:not(:last-child) {
+    margin-bottom: 30px;
+  }
+
+  @include bp-min(tablet) {
+    flex: 1;
+
+    &:not(:last-child) {
+      margin-bottom: 0;
+      margin-right: 36px;
+    }
+  }
+
+  @include bp-min(desktop) {
+    flex: 0 0 calc(100% / 3 - 10px);
+  }
+}
+
+.c-my-listings__actions {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.c-my-listings__action-item {
+  padding: 0 13px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font: {
+    size: 14px;
+    weight: 400;
+  }
+  line-height: 32px;
+  @include theme-prop(color, text);
+  text-decoration: none;
+
+  border: 1px solid;
+  border-radius: 4px;
+  background-color: white;
+  @include theme-prop(border-color, input-border);
+
+  img {
+    margin-right: 5px;
+    max-width: 12px;
+  }
+
+  &:not(:last-child) {
+    margin-right: 5px;
+  }
+}

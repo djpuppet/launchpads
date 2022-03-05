@@ -1,0 +1,161 @@
+<%
+  bits = []
+  bits << {
+      icon:  'lgbtq.svg',
+      title: 'LGBT Friendly',
+      value: 'Yes'
+  } if @user.lgbt_friendly?
+%>
+
+<%
+  if @user.photos.attached?
+    photos = @user.photos.map { |photo| url_for(photo) }
+    avatar = photos.first
+  else
+    photos = []
+    avatar = asset_pack_path('media/images/icons/user-photo.svg')
+  end
+%>
+
+<div class="c-grid c-user-details">
+  <div class="c-grid__inner c-user-details__inner">
+    <% if photos.any? %>
+      <div
+        class="c-grid__cell c-grid__cell--span-12 c-user-details__slider"
+        data-controller="carousel"
+        data-target="carousel.carousel"
+      >
+        <a href="#" data-action="carousel#previousSlide" class="previous">&nbsp;</a>
+        <a href="#" data-action="carousel#nextSlide" class="next">&nbsp;</a>
+        <% photos.each do |photo| %>
+          <div
+            class="c-user-details__slide"
+            data-target="carousel.slide"
+          >
+            <img src="<%= photo %>" alt="<%= @user.username %>">
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="c-grid__cell c-user-details__basic">
+      <h1 class="c-user-details__name">
+        <%= @user.username %>
+      </h1>
+      <ul class="c-user-details__basic-info">
+        <% if @user.show_pronouns %>
+          <% if @user.pronouns? %>
+            <li><%= I18n.t("model.user.pronouns.#{@user.pronouns}") %></li>
+          <% elsif @user.other_pronouns.present? %>
+            <li><%= @user.other_pronouns %></li>
+          <% end %>
+        <% end %>
+        <% if @user.show_gender %>
+          <% if @user.gender? %>
+            <li><%= I18n.t("model.user.gender.#{@user.gender}") %></li>
+          <% elsif @user.other_gender.present? %>
+            <li><%= @user.other_gender %></li>
+          <% end %>
+        <% end %>
+        <% if @user.show_ethnicity %>
+          <% if @user.ethnicity? %>
+            <li><%= @user.ethnicities.map { |ethnicity| I18n.t("model.user.ethnicity.#{ethnicity}") }.join(', ') %></li>
+          <% elsif @user.other_ethnicity.present? %>
+            <li><%= @user.other_ethnicity %></li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+
+    <div class="c-grid__cell c-user-details__details">
+      <div class="c-user-details__details-wrapper">
+        <div class="c-user-details__details-photo">
+          <img
+            src="<%= avatar %>"
+            alt="Host's photo"
+          >
+        </div>
+        <ul class="c-user-details__details-list">
+          <% if local_assigns.fetch(:edit, false) %>
+            <li class="c-user-details__details-item c-user-details__details-item--heading">
+              <a
+                href="<%= edit_profile_path(current_user.role) %>"
+                class="o-btn o-btn--primary o-btn--small c-user-details__edit-button"
+              >
+                <%= image_pack_tag('media/images/icons/pencil-icon--white.svg', alt: 'Edit') %>
+                Edit profile
+              </a>
+            </li>
+          <% end %>
+          <li class="c-user-details__details-item">
+            Verified Host
+          </li>
+          <li class="c-user-details__details-item">
+            Host since <%= I18n.l(@user.created_at, format: :profile) %>
+          </li>
+          <% if @user.language.present? %>
+            <li class="c-user-details__details-item">
+              Speaks <%= @user.language %>
+            </li>
+          <% end %>
+          <% if @user.show_transgender && @user.transgender? %>
+            <li class="c-user-details__details-item">
+              Transgender
+            </li>
+          <% end %>
+        </ul>
+
+        <% if @user != current_user %>
+          <div class="c-user-details__details-message">
+            <a
+              href="<%= find_or_create_conversations_path(@user) %>"
+              class="o-btn o-btn--primary o-btn--round"
+            >
+              Private Message
+            </a>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="c-grid__cell c-user-details__description">
+      <h3 class="c-user-details__about-heading">About <%= @user.username %></h3>
+      <div class="c-user-details__about">
+        <%= simple_format(@user.about) %>
+      </div>
+
+      <% if bits.any? %>
+        <div class="c-user-details__bits">
+          <h3 class="c-user-details__bits-heading">Lifestyle Preferences</h3>
+
+          <ul class="c-user-details__bits-list">
+            <% bits.each do |bit| %>
+              <li class="c-user-details__bit">
+                <div class="c-user-details__bit-icon">
+                  <%= image_pack_tag("media/images/icons/#{bit[:icon]}", alt: '') %>
+                </div>
+                <div class="c-user-details__bit-title">
+                  <%= bit[:title] %>
+                </div>
+                <div class="c-user-details__bit-value">
+                  <%= bit[:value] %>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <% if @user.rooms.any? %>
+        <h3 class="c-user-details__listings-heading"><%= @user.username %>'s listings</h3>
+        <div class="c-grid__inner c-user-details__listings">
+          <% @user.rooms.each do |room| %>
+            <div class="c-user-details__room-tile c-grid__cell">
+              <%= render 'rooms/room', room: room %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

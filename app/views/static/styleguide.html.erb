@@ -1,0 +1,76 @@
+<div class="c-grid">
+  <div class="c-grid__inner">
+
+    <div class="c-grid__cell c-grid__cell--span-12">
+      <a href="#" title="#" class="o-btn o-btn--small o-btn--primary">List your room</a>
+    </div>
+
+    <div class="c-grid__cell c-grid__cell--span-4">
+      <a href="#" title="#" class="o-btn o-btn--round o-btn--outline o-btn--secondary">List your room</a>
+    </div>
+
+    <div class="c-grid__cell c-grid__cell--span-4">
+      <a href="#" title="#" class="o-btn o-btn--round o-btn--outline o-btn--primary">List your room</a>
+    </div>
+
+    <div class="c-grid__cell c-grid__cell--span-4">
+      <a href="#" title="#" class="o-btn o-btn--outline o-btn--primary">List your room</a>
+    </div>
+
+    <div class="c-grid__cell c-grid__cell--span-4">
+      <a href="#" title="#" class="o-btn o-btn--round o-btn--secondary">List your room</a>
+    </div>
+
+    <div class="c-grid__cell c-grid__cell--span-4">
+      <a href="#" title="#" class="o-btn">List your room</a>
+    </div>
+
+    <div class="c-grid__cell c-grid__cell--span-4">
+      <a href="#" title="#" class="o-btn o-btn--primary">List your room</a>
+    </div>
+
+    <div class="c-grid__cell c-grid__cell--span-4">
+      <a href="#" title="#" class="o-btn o-btn--round o-btn--primary">List your room</a>
+    </div>
+
+    <div class="c-grid__cell c-grid__cell--span-4">
+      <a href="#" title="#" class="o-btn o-btn--round" disabled>List your room</a>
+    </div>
+
+    <div class="c-grid__cell c-grid__cell--span-12">
+      <a
+        href="#form-completed"
+        title="#"
+        class="o-btn o-btn--round"
+        data-turbolinks="false"
+      >
+        Open modal
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<%= render('partials/modal', name: 'form-completed', show_close: true, primary: true) do %>
+  <div class="c-form-completed">
+    <div class="c-form-completed__icon">
+      <%= image_pack_tag('media/images/icons/complete-inverted-icon.svg') %>
+    </div>
+    <h1 class="c-form-completed__heading">
+      Form sent!
+    </h1>
+    <p class="c-form-completed__paragraph">
+      Browse available rooms on launchpads. Once your profile is approved by a member of the Launchpads team, you will
+      be able to connect with your future roommate!
+    </p>
+    <div class="c-form-completed__button">
+      <a
+        href="<%= root_path %>"
+        title="Browse rooms"
+        class="o-btn o-btn--round"
+      >
+        Browse rooms
+      </a>
+    </div>
+  </div>
+<% end %>

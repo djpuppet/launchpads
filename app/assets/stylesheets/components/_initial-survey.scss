@@ -1,0 +1,55 @@
+@use '../tools' as *;
+
+.c-initial-survey {
+  //
+}
+
+.c-initial-survey__hero {
+  @include bp-each using ($size) {
+    margin-bottom: #{80px - grid-gutter($size) / 2};
+  }
+}
+
+.c-initial-survey__heading {
+  font: {
+    weight: 600;
+    size: 37px;
+  }
+  line-height: 40px;
+  @include theme-prop(color, secondary);
+}
+
+.c-initial-survey__subheading {
+  font: {
+    weight: 300;
+    size: 20px;
+  }
+  line-height: 30px;
+  @include theme-prop(color, secondary);
+}
+
+.c-initial-survey__user {
+  //
+}
+
+.c-initial-survey__back {
+  margin-top: 40px;
+}
+
+.c-initial-survey__form {
+  @include grid-cell-span(phone, 4);
+  @include grid-cell-span(tablet, 4);
+  @include grid-cell-span(desktop, 8);
+  @include grid-cell-span(full, 8);
+
+  border-radius: 10px;
+  border: 1px solid;
+  @include theme-prop(border-color, primary);
+}
+
+.c-initial-survey__submit {
+  @include bp-margin(top);
+
+  display: flex;
+  justify-content: flex-end;
+}

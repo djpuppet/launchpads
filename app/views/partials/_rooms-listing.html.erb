@@ -1,0 +1,21 @@
+<%= render 'rooms/partials/filters' %>
+<div
+  class="c-grid__inner c-rooms-list__collection"
+  id="collection"
+  data-target="filters.collection"
+>
+  <% if @pagy.count > 0 %>
+    <% @rooms.each do |room| %>
+      <div class="c-grid__cell c-grid__cell--span-4">
+        <%= render 'rooms/room', room: room %>
+      </div>
+    <% end %>
+    <div class="c-grid__cell c-grid__cell--span-12 c-pagination">
+      <%= pagy_nav_js(@pagy).html_safe %>
+    </div>
+  <% else %>
+    <div class="c-grid__cell c-grid__cell--span-12">
+      <p>There are no spaces that match these parameters.</p>
+    </div>
+  <% end %>
+</div>

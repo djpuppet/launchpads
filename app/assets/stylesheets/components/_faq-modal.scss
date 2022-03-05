@@ -1,0 +1,49 @@
+@use '../tools' as *;
+
+.c-faq-modal {
+  margin: 30px 0;
+
+  @include bp-min(desktop) {
+    margin: 80px 0 50px;
+    padding-right: 60px;
+    padding-left: 60px;
+  }
+}
+
+.c-faq-modal__heading {
+  margin: 0 25px;
+
+  font: {
+    size: 22px;
+    weight: 600;
+  }
+  line-height: 30px;
+  text-align: center;
+}
+
+.c-faq-modal__entry {
+  margin: 36px 0;
+  font: {
+    size: 16px;
+    weight: normal;
+  }
+  line-height: 24px;
+}
+
+.c-faq-modal__question {
+  font-weight: bold;
+}
+
+.c-faq-modal__answer {
+  padding: 0;
+  margin: 0;
+}
+
+.c-faq-modal__close {
+  display: flex;
+  justify-content: center;
+
+  @include bp-min(desktop) {
+    margin-top: 80px;
+  }
+}

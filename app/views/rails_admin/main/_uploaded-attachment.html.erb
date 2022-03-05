@@ -1,0 +1,13 @@
+<div class="attachment">
+  <%= form.hidden_field(value.name, value: value.signed_id, multiple: true) %>
+  <% if image %>
+    <%= link_to(url, target: '_blank', rel: 'noopener noreferrer') do %>
+      <%= image_tag(thumb_url, class: 'img-thumbnail') %>
+    <% end %>
+  <% else %>
+    <%= link_to(value.filename, url, target: '_blank', rel: 'noopener noreferrer') %>
+  <% end %>
+  <a class="btn btn-info btn-remove-uploaded-attachment" data-toggle="button" role="button">
+    <i class="icon icon-trash"></i> <%= I18n.t('admin.actions.delete.menu').capitalize %> attachment
+  </a>
+</div>

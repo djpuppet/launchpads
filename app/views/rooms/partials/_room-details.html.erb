@@ -1,0 +1,81 @@
+<div class="c-form c-grid__inner c-tab" id="room-details" data-target="tabs.tab">
+  <div class="c-form__wrapper c-grid__cell c-grid__cell--span-12">
+    <div class="c-form__section-heading">
+      <h2>
+        Room Details
+      </h2>
+      <p>
+        Tell us a little more about the room you’re listing.
+      </p>
+    </div>
+
+    <div class="c-form__row c-grid__inner">
+      <div class="c-form-field <%= add_error_class(form, :photos) %> c-form-field--wide c-grid__cell">
+        <%= render(
+                partial: 'partials/form/photos-field',
+                locals:  {
+                    form:       form,
+                    label:      'Photos',
+                    help_text:  'Upload photos of the space.  We recommend including a photo of the house, '\
+                                'room for rent, cooking area, bathroom, and any other things that you think '\
+                                'a youth might like to see.',
+                    property:   :photos,
+                }
+            ) %>
+      </div>
+    </div>
+
+    <div class="c-form__row c-grid__inner">
+      <div class="c-form-field <%= add_error_class(form, :about) %> c-form-field--wide c-grid__cell">
+        <%= render(
+                'partials/form/textarea-field',
+                {
+                    form:     form,
+                    label:    'About the Room*',
+                    property: :about
+                }
+            ) %>
+      </div>
+
+      <div class="c-form-field <%= add_error_class(form, :amenities) %> c-grid__cell">
+        <%= render(
+                'partials/form/multiselect',
+                {
+                    form:        form,
+                    label:       'Amenities',
+                    property:    :amenities,
+                    options:     Room::AMENITIES_VALUES.map { |r| [I18n.t("model.room.amenities.#{r}"), r] }
+                }
+            ) %>
+      </div>
+
+      <div class="c-form-field <%= add_error_class(form, :other_amenities) %> c-grid__cell">
+        <%= render(
+                'partials/form/text-field',
+                {
+                    form:          form,
+                    property:      :other_amenities,
+                    plain:         true,
+                    field_options: { placeholder: 'Other (e.g. pool, on site fitness studio)' }
+                }
+            ) %>
+      </div>
+    </div>
+  </div>
+
+  <div class="c-form__actions c-grid__cell c-grid__cell--span-12">
+    <a
+      href="#"
+      title="Go to previous step"
+      class="o-btn o-btn--round o-btn--outline"
+      data-action="click->tabs#previousTab"
+    >
+      Previous
+    </a>
+    <%= form.submit(
+            'Next',
+            class:         'o-btn o-btn--primary o-btn--round',
+            'data-action': 'click->tabs#nextTab'
+        ) %>
+  </div>
+</div>

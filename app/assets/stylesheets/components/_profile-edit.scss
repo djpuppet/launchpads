@@ -1,0 +1,5 @@
+@use '../tools' as *;
+
+.c-profile-edit {
+  @include grid-container;
+}

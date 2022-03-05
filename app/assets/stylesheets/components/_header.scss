@@ -1,0 +1,152 @@
+@use '../tools' as *;
+@use '../objects/btn';
+
+.c-header {
+  height: 40px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 2;
+
+  background-color: white;
+
+  @include bp-min(desktop) {
+    height: 85px;
+  }
+}
+
+.c-header__grid {
+  height: 100%;
+  @include grid-container;
+}
+
+.c-header__wrapper {
+  @include grid-inner;
+  @include bp-each using($size) {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  height: 100%;
+  align-items: center;
+  position: relative;
+
+  img {
+    vertical-align: middle;
+  }
+}
+
+.c-header__logo {
+  @include grid-cell-span(phone, 2);
+  @include grid-cell-span(tablet, 5);
+  @include grid-cell-span(desktop, 2);
+  @include grid-cell-span(full, 2);
+
+  @include bp-min(tablet) {
+    img {
+      width: 112px;
+    }
+  }
+}
+
+.c-header__hamburger {
+  @include grid-cell-span(phone, 2);
+  @include grid-cell-span(tablet, 3);
+
+  text-align: right;
+
+  position: relative;
+
+  @include bp-min(desktop) {
+    display: none;
+  }
+}
+
+.c-header__menu {
+  position: absolute;
+  top: 100%;
+  @include bp-each(phone tablet) using ($size) {
+    right: #{grid-margin($size) - 5px};
+  }
+
+  @include grid-cell-span(desktop, 10);
+  @include grid-cell-span(full, 10);
+  @include bp-min(desktop) {
+    position: static;
+    top: auto;
+    right: auto;
+  }
+}
+
+.c-header__links {
+  list-style: none;
+  margin: -5px -16px;
+  padding: 0;
+
+  line-height: 24px;
+  text-align: left;
+
+  li {
+    padding: 5px 16px;
+
+    font-weight: normal;
+  }
+
+  li:not(:last-child) {
+    border-bottom: 1px solid;
+    @include theme-prop(border-bottom-color, border);
+  }
+
+  @include bp-min(desktop) {
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+
+    font-size: 14px;
+    line-height: 19px;
+
+    li {
+      padding: 0;
+      margin: 0 0 0 16px;
+    }
+
+    li:not(:last-child) {
+      border: none;
+      margin-right: 16px;
+    }
+  }
+}
+
+.c-header__link {
+  @include theme-prop(color, text-light);
+  text-decoration: none;
+
+  &:hover {
+    @include theme-prop(color, primary);
+  }
+
+  &--button {
+    @extend .o-btn, .o-btn--primary, .o-btn--small;
+
+    padding-left: 10px;
+    padding-right: 10px;
+    min-width: auto;
+    width: auto;
+
+    color: white;
+
+    &:hover {
+      @include theme-prop(color, text-light);
+    }
+  }
+
+  &--inbox {
+    .unread & {
+      font-weight: bold;
+      @include theme-prop(color, secondary);
+    }
+  }
+}

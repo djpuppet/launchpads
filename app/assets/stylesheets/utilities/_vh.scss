@@ -1,0 +1,3 @@
+@function vh($multiplier) {
+  @return calc(var(--vh, 1vh) * #{$multiplier});
+}

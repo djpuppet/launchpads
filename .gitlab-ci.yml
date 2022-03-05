@@ -1,0 +1,52 @@
+image: ruby:2.7.2
+
+services:
+  - postgres
+
+variables:
+  POSTGRES_DB: database_test
+  POSTGRES_USER: database_user
+  POSTGRES_PASSWORD: database_user_pass
+
+before_script:
+  - apt-get update -qq && apt-get install -y -qq curl gnupg
+  - curl -sL https://deb.nodesource.com/setup_10.x  | bash -
+  - apt-get -y install nodejs
+  - npm install -g yarn
+  - export DATABASE_URL=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres/$POSTGRES_DB
+  - export RAILS_ENV=test
+  - export DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true
+  - gem install bundler --no-document
+  - bundle install --jobs $(nproc)  "${FLAGS[@]}"
+  - bundle exec rails db:create
+  - bundle exec rails db:migrate
+  - yarn install
+  - bundle exec rails webpacker:compile
+
+rspec:
+  only:
+    refs:
+      - master
+      - develop
+      - merge_requests
+  script:
+    - bundle exec rspec
+
+rubycritic:
+  only:
+    refs:
+      - master
+      - develop
+      - merge_requests
+  script:
+    - bundle exec rubycritic --no-browser --format console --minimum-score 94 app
+
+staging_deploy:
+  when: manual
+  only:
+    refs:
+      - develop
+  before_script:
+    - gem install dpl --pre
+  script:
+    - dpl heroku api --api-key $HEROKU_API_KEY --app $HEROKU_APP_STAGING --cleanup --run "rails db:migrate"

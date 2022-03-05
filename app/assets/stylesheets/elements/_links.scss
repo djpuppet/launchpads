@@ -1,0 +1,11 @@
+@use '../tools' as *;
+
+a {
+  @include theme-prop(color, primary);
+  text-decoration: underline;
+
+  &:hover {
+    @include theme-prop(color, secondary);
+    text-decoration: underline;
+  }
+}

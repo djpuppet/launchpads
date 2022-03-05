@@ -1,0 +1,58 @@
+<div class="c-room-tile" data-controller="carousel">
+  <div class="c-room-tile__slides <%= 'c-room-tile__slides--bordered' unless room.photos.attached? %>" data-target="carousel.carousel">
+    <% if room.photos.attached? %>
+      <% room.photos.each do |photo| %>
+        <% photo_url = if photo.variable?
+                         polymorphic_url(photo.variant(resize_to_limit: [360, 360]))
+                       else
+                         polymorphic_url(photo)
+                       end %>
+        <div
+          data-target="carousel.slide"
+          class="c-room-tile__slide"
+          data-image-url="<%= photo_url %>"
+          style="background-image: url('<%=asset_pack_path('media/images/spinner.gif') %>')"
+        >
+          <img>
+        </div>
+      <% end %>
+      <div class="c-room-tile__dots">
+        <% 1.upto(room.photos.to_a.size).each do |index| %>
+          <a
+            href="#"
+            title="Show photo <%= index %>"
+            data-action="carousel#onDotClick"
+            data-photo-index="<%= index - 1 %>"
+            data-target="carousel.dot"
+          ></a>
+        <% end %>
+      </div>
+    <% else %>
+
+    <% end %>
+  </div>
+  <% photo_url = if room.host.photos.first
+                   variant = if room.user.photos.first.variable?
+                               room.user.photos.first.variant(resize_to_limit: [50, 50])
+                             else
+                               room.user.photos.first
+                             end
+                   polymorphic_url(variant)
+                 else
+                   asset_pack_path('media/images/icons/user-photo.svg')
+                 end %>
+  <span
+    class="c-room-tile__host"
+    title="<%= room.host.username %>"
+    style="background-image: url('<%= photo_url %>');"
+  >
+  </span>
+
+  <a href="<%= room_path(room) %>" class="c-room-tile__info">
+    <div class="c-room-tile__district"><%= room.city_or_other_city %></div>
+    <h5 class="c-room-tile__name"><%= room.title %></h5>
+    <div class="c-room-tile__price">
+      <span><%= number_to_currency(room.full_price) %></span> / month
+    </div>
+  </a>
+</div>

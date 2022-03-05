@@ -1,0 +1,42 @@
+@use 'breakpoints' as bp;
+@use 'grid-helpers' as helpers;
+@forward 'grid-helpers' show gutter, margin;
+
+@mixin container {
+  margin-right: auto;
+  margin-left: auto;
+  @include helpers.container-max-width;
+}
+
+@mixin inner {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  @supports (display: grid) {
+    display: grid;
+    @include bp.each using ($size) {
+      @include helpers.inner-grid-templates($size);
+    }
+  }
+
+  @include bp.padding(top bottom);
+  @include bp.each using ($size) {
+    @include helpers.inner-width($size);
+    @include helpers.inner-margins($size);
+  }
+}
+
+@mixin cell {
+  @include bp.each using ($size) {
+    @include helpers.cell-width($size);
+    @include helpers.cell-margins($size);
+    @include helpers.cell-span($size);
+  }
+}
+
+@mixin cell-span($size, $span) {
+  @include bp.only($size) {
+    @include helpers.cell-width($size, $span);
+  }
+}

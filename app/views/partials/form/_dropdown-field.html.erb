@@ -1,0 +1,97 @@
+<%
+  # USAGE INSTRUCTIONS
+  #   if `multiple` is passed it allows selecting multiple values
+  #   if `disabled` is passed it disables the input
+  #
+  #   if `prompt` is passed it includes blank element with the label passed under the `prompt` key (with blank value)
+  #   `options` should be passes in a form accepted by `options_for_select` method.
+  #   if `value` is provided, it will be used. If not, the dropdown will try to find the value under `form.object`'s `name` property
+
+  input_props = {
+      'data-target': 'dropdown.input',
+  }
+
+  input_props[:multiple] = local_assigns.fetch(:multiple, false)
+  input_props[:disabled] = local_assigns.fetch(:disabled, false)
+
+  value = local_assigns.fetch(
+      :value,
+      local_assigns[:form].object.try(local_assigns[:property])
+  )
+
+  if local_assigns.fetch(:boolean, false)
+    value = (value ? 1 : 0) unless value.nil?
+  end
+%>
+<div
+  data-controller="dropdown"
+  <%= 'data-dropdown-multiple' if input_props[:multiple] %>
+  <%= 'data-dropdown-disabled' if input_props[:disabled] %>
+>
+  <% unless local_assigns.fetch(:hide_label, false) %>
+    <%= local_assigns[:form].label(
+            local_assigns[:property],
+            local_assigns[:label],
+            class: 'c-form-field__label',
+            'data-action': 'click->dropdown#labelClick'
+        ) %>
+    <% if local_assigns.key?(:help_text) %>
+      <div class="c-form-field__help-text">
+        <%= local_assigns[:help_text] %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <%= render 'partials/form/field-errors', local_assigns %>
+
+  <div
+    class="c-form-field__input c-form-dropdown <%= 'disabled' if input_props[:disabled] %>"
+    data-target="dropdown.rootElement"
+    <% unless input_props[:disabled] %>
+    data-action="keypress->dropdown#accessibilityKeypress"
+    tabindex="0"
+    <% end %>
+    >
+    <%= local_assigns[:form].select(
+            local_assigns[:property],
+            options_for_select(
+                local_assigns[:options],
+                value
+            ),
+            { include_blank: local_assigns[:prompt] },
+            input_props
+        ) %>
+    <span
+      class="c-form-dropdown__prompt placeholder"
+      data-target="dropdown.placeholder"
+      data-action="click->dropdown#toggle"
+    ></span>
+    <a class="c-form-field__input-picker" title="Open datepicker" data-action="dropdown#toggle">
+      <%= image_pack_tag('media/images/icons/arrow-down.svg', alt: 'Open datepicker') %>
+    </a>
+    <ul class="c-form-dropdown__options">
+      <% if local_assigns[:prompt] && !input_props[:multiple] %>
+        <li
+          data-dropdown-value=""
+          data-target="dropdown.option"
+          data-action="click->dropdown#select"
+          class="c-form-dropdown__option c-form-dropdown__option--prompt"
+          tabindex="-1"
+        >
+          Clear selection
+        </li>
+      <% end %>
+      <% local_assigns[:options].each do |option| %>
+        <li
+          data-dropdown-value="<%= option[1] %>"
+          data-target="dropdown.option"
+          data-action="click->dropdown#select"
+          class="c-form-dropdown__option"
+          tabindex="-1"
+        >
+          <%= option[0] %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

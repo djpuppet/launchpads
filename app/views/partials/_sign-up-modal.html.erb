@@ -1,0 +1,111 @@
+<%= form_with(
+        model:  User.new,
+        as:     :user,
+        url:    registration_path(:json),
+        method: :post,
+        remote: true,
+        html:   {
+            class:             'c-sign-modal',
+            'data-controller': 'auth',
+            'data-action':     'ajax:error->auth#signUpError ajax:success->auth#signUpSuccess',
+            'data-type':       :json,
+        }
+    ) do |form| %>
+  <div class="c-sign-modal__icon">
+    <%= image_pack_tag('media/images/icons/complete-icon.svg') %>
+  </div>
+  <h1 class="c-sign-modal__heading" id="sign-up-modal-heading">
+    Sign Up
+  </h1>
+
+  <div class="c-sign-modal__message hidden">
+    <div data-target="auth.messageContainer"></div>
+
+    <a href="#" data-action="modal#close">Close</a>
+  </div>
+
+  <div class="c-sign-modal__fields" data-target="auth.formFields">
+    <template data-target="auth.errorsTemplate">
+      <div class="c-sign-modal__errors" data-target="auth.errors"></div>
+    </template>
+
+    <div class="c-sign-modal__input">
+      <%= render(
+              partial: 'partials/form/text-field',
+              locals:  {
+                  form:          form,
+                  property:      :email,
+                  plain:         true,
+                  field_options: {
+                      autocomplete: 'email',
+                      placeholder:  'Email*'
+                  }
+              }
+          ) %>
+    </div>
+
+    <div class="c-sign-modal__input">
+      <%= render(
+              partial: 'partials/form/text-field',
+              locals:  {
+                  form:          form,
+                  property:      :password,
+                  plain:         true,
+                  field_options: {
+                      autocomplete: 'new-password',
+                      type:         'password',
+                      placeholder:  'Password*'
+                  }
+              }
+          ) %>
+    </div>
+
+    <div class="c-sign-modal__input">
+      <%= render(
+              partial: 'partials/form/text-field',
+              locals:  {
+                  form:          form,
+                  property:      :password_confirmation,
+                  plain:         true,
+                  field_options: {
+                      autocomplete: 'new-password',
+                      type:         'password',
+                      placeholder:  'Re-enter Password*'
+                  }
+              }
+          ) %>
+    </div>
+
+    <div class="c-sign-modal__input c-sign-modal__input--agreements">
+      <%= form.label(
+          :agreements_acceptance,
+          class: 'c-form-field__label c-form-field__label--checkbox'
+      ) do %>
+        <%= form.check_box(:agreements_acceptance) %>
+        <span>
+          <span>
+            I have read and understand the Launchpads
+            <a href="https://www.wearelaunchpads.org/privacy-policy" title="Privacy Policy" target="_blank">
+              Privacy Policy
+            </a>
+          </span>
+        </span>
+      <% end %>
+    </div>
+
+    <div class="c-sign-modal__submit">
+      <%= form.submit('Submit', class: 'o-btn o-btn--round o-btn--primary') %>
+    </div>
+
+    <div class="c-sign-modal__links">
+      Already have an account?
+      <a
+        href="<%= root_path %>"
+        title="Sign In"
+        data-turbolinks="false"
+      >
+        Sign in
+      </a><br/>
+    </div>
+  </div>
+<% end %>

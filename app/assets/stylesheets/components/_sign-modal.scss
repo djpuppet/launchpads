@@ -1,0 +1,94 @@
+@use '../tools' as *;
+
+.c-sign-modal {
+  padding: 45px 0 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  text-align: center;
+  @include theme-prop(color, text);
+}
+
+.c-sign-modal__fields.hidden,
+.c-sign-modal__message.hidden {
+  display: none;
+}
+
+.c-sign-modal__fields {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.c-sign-modal__message {
+  margin-top: 15px;
+}
+
+.c-sign-modal__icon {
+  width: 42px;
+  height: 46px;
+}
+
+.c-sign-modal__heading {
+  margin: 20px 0 0;
+
+  font: {
+    size: 30px;
+    weight: 600;
+  }
+  line-height: 40px;
+}
+
+.c-sign-modal__errors {
+  margin-top: 20px;
+  @include theme-prop(color, error);
+}
+
+.c-sign-modal__input {
+  min-width: 250px;
+
+  div {
+    margin-top: 15px;
+    @include theme-prop(--input-border-color, modal-input-border-color);
+    @include theme-prop(--input-text-color, modal-input-text-color);
+
+    input::placeholder {
+      color: var(--input-text-color);
+    }
+
+    input::-moz-placeholder {
+      color: var(--input-text-color);
+    }
+  }
+
+  &--agreements {
+    padding-top: 30px;
+
+    label {
+      --font-size: 12px;
+      --line-height: 16px;
+      @include theme-prop(--color, disabled);
+    }
+  }
+}
+
+.c-sign-modal__submit {
+  margin-top: 55px;
+}
+
+.c-sign-modal__links {
+  margin-top: 20px;
+
+  font: {
+    size: 14px;
+    weight: normal;
+  }
+  line-height: 25px;
+  @include theme-prop(color, disabled);
+
+  a {
+    text-decoration: none;
+  }
+}

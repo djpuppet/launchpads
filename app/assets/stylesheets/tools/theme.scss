@@ -1,0 +1,17 @@
+@use 'sass:meta';
+@use 'sass:map';
+@use '../settings';
+
+$variables: meta.module-variables('settings');
+
+@function get-prop($name) {
+  @if not map.has-key($variables, $name) {
+    @error 'Requested value doesn\'t exist! Choose one of #{map.keys($variables)}';
+  }
+
+  @return map.get($variables, $name);
+}
+
+@mixin prop($prop-name, $name) {
+  #{$prop-name}: #{get-prop($name)};
+}

@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+  </head>
+  <body>
+    <%= render "profile_mailer/partials/complete_profile/#{@user.role}" %>
+    <%= render 'partials/not-reply-message-mailer' %>
+  </body>
+</html>
